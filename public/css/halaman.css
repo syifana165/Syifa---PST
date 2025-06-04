@@ -1,0 +1,169 @@
+/* halaman.css */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+}
+
+/* Header */
+header {
+    background: #1f5624;
+    color: white;
+    padding: 20px 0;
+    position: relative;
+}
+
+header .logo {
+    float: left;
+    width: 50%;
+}
+
+header .logo img {
+    width: 50px;
+    height: 50px;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+header nav {
+    float: right;
+    width: 50%;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: #1f5624;
+    width: 100%;
+}
+
+header nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+
+header nav ul li {
+    display: inline;
+    margin-left: 20px;
+}
+
+header nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    display: inline-block;
+    padding: 10px;
+}
+
+header nav ul li a:hover {
+    background-color: #333;
+}
+
+/* Hero Section (Selamat Datang) */
+#hero {
+    position: relative;
+    padding: 50px 20px;
+    text-align: center;
+    color: #075d0d;
+    background: url('/assets/img/hh.jpg') no-repeat center center;
+    background-size: cover;
+    height: 300px; /* Pastikan ada tinggi */
+}
+
+#hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.5);
+    z-index: 1;
+}
+
+#hero .container {
+    position: relative;
+    z-index: 2;
+    background: rgba(255, 255, 255, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+    display: inline-block;
+}
+
+#hero h2 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: #096107;
+}
+
+#hero p {
+    font-size: 1.2em;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+#hero .button {
+    display: inline-block;
+    padding: 15px 30px;
+    background-color: #e8491d;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1.2em;
+    transition: background-color 0.3s ease;
+}
+
+#hero .button:hover {
+    background-color: #1f5624;
+}
+
+/* Main Content */
+main {
+    padding: 20px;
+}
+
+/* Berita Terbaru */
+#berita-terbaru {
+    margin-top: 20px;
+}
+
+.berita-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.berita-item {
+    border: 1px solid #ddd;
+    padding: 15px;
+}
+
+.berita-item img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+/* Info Dinas Lingkungan Hidup */
+.info-dinas {
+    text-align: center;
+    font-size: 1.8em;
+    font-weight: bold;
+    margin: 50px 0 20px 0; /* Menambahkan jarak dari elemen sebelumnya */
+}
+
+/* Footer */
+footer {
+    padding: 20px;
+    text-align: center;
+    background: #1f5624;
+    color: white;
+    margin-top: 20px;
+}
