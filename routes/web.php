@@ -15,6 +15,7 @@ use App\Http\Controllers\C_PetugasLapangan;
 use App\Http\Controllers\C_LaporanP;
 use App\Http\Controllers\C_Program;
 use App\Http\Controllers\C_Halaman;
+use App\Http\Controllers\C_Home;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +38,9 @@ Route::get('/register', [C_Login::class, 'showRegister'])->name('register');
 Route::post('/register', [C_Login::class, 'register'])->name('register.post');
 Route::post('/logout', [C_Login::class, 'logout'])->name('logout');
 
+Route::get('/dashboard', [C_Home::class, 'index'])->name('dashboard');
+Route::get('/home', [C_Home::class, 'index']);
+
 /*
 |--------------------------------------------------------------------------
 | Pengaduan
@@ -56,6 +60,7 @@ Route::get('/pengaduan/tugaskan/{id_pengaduan}', [C_Pengaduan::class, 'tugaskan'
 Route::post('/pengaduan/ubah-status/{id_pengaduan}', [C_Pengaduan::class, 'ubahStatus'])->name('pengaduan.ubahStatus');
 Route::get('/halaman-pengaduan', [C_Pengaduan::class, 'halamanPengaduan'])->name('halaman.pengaduan');
 Route::get('/pengaduandata', [C_Pengaduan::class, 'publicView'])->name('pengaduandata');
+
 
 /*
 |--------------------------------------------------------------------------
@@ -95,6 +100,7 @@ Route::get('/petugas/edit/{id_petugas}', [C_Petugas::class, 'edit'])->name('petu
 Route::put('/petugas/update/{id_petugas}', [C_Petugas::class, 'update'])->name('petugas.update');
 Route::delete('/petugas/delete/{id_petugas}', [C_Petugas::class, 'destroy'])->name('petugas.destroy');
 Route::get('/petugas/view', [C_Petugas::class, 'publicView'])->name('petugas.view');
+Route::get('/data-petugas', [C_Petugas::class, 'showPublic'])->name('data.petugas_public');
 
 /*
 |--------------------------------------------------------------------------
@@ -112,8 +118,8 @@ Route::get('/data-pj-petugas', [C_Data::class, 'index'])->name('data.pj_petugas'
 | Laporan Petugas
 |--------------------------------------------------------------------------
 */
-Route::get('/laporan/create', [C_LaporanP::class, 'create'])->name('laporan.create');
-Route::post('/laporan', [C_LaporanP::class, 'store'])->name('laporan.store');
+Route::get('/laporan/create/{id_penugasan}', [C_LaporanP::class, 'createLaporan'])->name('laporan.create');
+Route::post('/laporan/store', [C_LaporanP::class, 'store'])->name('laporan.store');
 Route::get('/laporan', [C_LaporanP::class, 'index'])->name('laporan.index');
 Route::get('/laporan/detail/{id_laporanpetugas}', [C_LaporanP::class, 'detail'])->name('laporan.detail');
 Route::get('/laporan/edit/{id_laporanpetugas}', [C_LaporanP::class, 'edit'])->name('laporan.edit');
@@ -160,3 +166,18 @@ Route::middleware(['auth', 'checklevel:3'])->group(function () {
 });
 
 
+Route::get('/visi', function () {
+    return view('v_visimisi');
+});
+
+Route::get('/tentangkami', function () {
+    return view('v_tentangkami');
+});
+
+Route::get('/tujuan', function () {
+    return view('v_tujuan');
+});
+
+Route::get('/profile', function () {
+    return view('v_profilmentri');
+});

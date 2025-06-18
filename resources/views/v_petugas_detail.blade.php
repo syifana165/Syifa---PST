@@ -3,16 +3,115 @@
 @section('title', 'Detail Petugas')
 
 @section('content')
-<div class="container">
-    <h3 class="text-center mb-4" style="font-size: 2rem; font-weight: bold; color: #343a40;">Detail Petugas</h3>
+<style>
+    body {
+        background: linear-gradient(135deg, #e0f2f1, #e8f5e9);
+    }
 
-    <table class="table table-bordered" style="font-size: 1.2rem; color: #495057;">
-        <tr><th style="background-color: #f8f9fa; width: 200px;">Nama</th><td>{{ $petugas->Nama }}</td></tr>
-        <tr><th style="background-color: #f8f9fa;">No HP</th><td>{{ $petugas->No_HP }}</td></tr>
-        <tr><th style="background-color: #f8f9fa;">Alamat</th><td>{{ $petugas->Alamat }}</td></tr>
-        <tr><th style="background-color: #f8f9fa;">Keterangan</th><td>{{ $petugas->keterangan }}</td></tr>
-    </table>
+    .glass-card {
+        backdrop-filter: blur(12px);
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 20px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        padding: 2.5rem;
+        transition: all 0.3s ease-in-out;
+    }
 
-    <a href="{{ route('petugas.index') }}" class="btn btn-secondary" style="font-size: 1.1rem;">Kembali</a>
+    .glass-card:hover {
+        transform: scale(1.01);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    }
+
+    .card-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #00897b;
+        text-align: center;
+        margin-bottom: 2rem;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    }
+
+    .detail-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1.2rem;
+    }
+
+    .detail-icon {
+        font-size: 1.5rem;
+        color: #00695c;
+        width: 40px;
+    }
+
+    .detail-label {
+        font-weight: 600;
+        color: #37474f;
+        width: 140px;
+    }
+
+    .detail-value {
+        font-size: 1.1rem;
+        color: #263238;
+    }
+
+    .btn-back {
+        display: inline-flex;
+        align-items: center;
+        background-color: #00897b;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 30px;
+        font-weight: 600;
+        transition: 0.3s ease;
+        box-shadow: 0 5px 15px rgba(0, 150, 136, 0.3);
+    }
+
+    .btn-back i {
+        margin-right: 8px;
+    }
+
+    .btn-back:hover {
+        background-color: #00695c;
+        color: white;
+        transform: translateY(-2px);
+    }
+</style>
+
+<div class="container py-5 d-flex justify-content-center">
+    <div class="glass-card w-100" style="max-width: 600px;">
+        <div class="card-title">
+            <i class="fas fa-user-shield me-2"></i>Detail Petugas
+        </div>
+
+        <div class="detail-row">
+            <div class="detail-icon"><i class="fas fa-user"></i></div>
+            <div class="detail-label">Nama:</div>
+            <div class="detail-value">{{ $petugas->Nama }}</div>
+        </div>
+
+        <div class="detail-row">
+            <div class="detail-icon"><i class="fas fa-phone-alt"></i></div>
+            <div class="detail-label">No HP:</div>
+            <div class="detail-value">{{ $petugas->No_HP }}</div>
+        </div>
+
+        <div class="detail-row">
+            <div class="detail-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <div class="detail-label">Alamat:</div>
+            <div class="detail-value">{{ $petugas->Alamat }}</div>
+        </div>
+
+        <div class="detail-row">
+            <div class="detail-icon"><i class="fas fa-info-circle"></i></div>
+            <div class="detail-label">Keterangan:</div>
+            <div class="detail-value">{{ $petugas->keterangan }}</div>
+        </div>
+
+        <div class="text-end mt-4">
+            <a href="{{ route('petugas.index') }}" class="btn-back">
+                <i class="fas fa-arrow-left"></i>Kembali
+            </a>
+        </div>
+    </div>
 </div>
 @endsection

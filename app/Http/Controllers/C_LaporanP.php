@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\M_LaporanP;
 use App\Models\M_Petugas;
+use App\Models\M_Penugasan;
 
 class C_LaporanP extends Controller
 {
@@ -71,4 +72,20 @@ class C_LaporanP extends Controller
         $laporan = M_LaporanP::latest()->get();
         return view('v_halaman', compact('laporan'));
     }
+
+    
+    public function detail($id_petugas)
+    {
+        $laporan = M_LaporanP::with('petugas')->findOrFail($id_petugas);
+        return view('v_petugaslaporandetail', compact('laporan'));
+    }
+
+    public function createLaporan($id_penugasan)
+    {
+        $penugasan = M_Penugasan::with('petugas', 'pengaduan')->findOrFail($id_penugasan);
+
+        return view('v_petugasform', compact('penugasan'));
+    }
+
+
 }

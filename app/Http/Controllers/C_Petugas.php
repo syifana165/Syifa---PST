@@ -87,4 +87,11 @@ class C_Petugas extends Controller
         $petugas = M_Petugas::findOrFail($id_petugas);  // Menggunakan Eloquent ORM
         return view('v_petugas_detail', compact('petugas'));
     }
+
+    public function showPublic()
+    {
+        $dataPetugas = M_Petugas::all(); // atau pakai where jika ingin filter tertentu
+        return view('v_petugasdata', compact('dataPetugas'));
+    }
+
 }

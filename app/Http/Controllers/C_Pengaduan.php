@@ -26,7 +26,6 @@ class C_Pengaduan extends Controller
 
         $query = DB::table('tb_pengaduan');
 
-        // Fitur pencarian
         if ($request->has('search') && $request->search != '') {
             $search = $request->search;
             $query->where(function ($q) use ($search) {
@@ -40,8 +39,6 @@ class C_Pengaduan extends Controller
 
         $totalPengaduan = DB::table('tb_pengaduan')->count();
         $pengaduanSelesai = DB::table('tb_pengaduan')->where('status', 'selesai')->count();
-        $pengaduanPending = DB::table('tb_pengaduan')->where('status', 'pending')->count();
-
         return view('v_pengaduan', compact(
             'pengaduan',
             'totalPengaduan',
@@ -143,17 +140,22 @@ class C_Pengaduan extends Controller
     }
 
     public function ubahStatus(Request $request, $id_pengaduan)
-    {
-        $request->validate([
-            'status' => 'required|in:Pengaduan,Sedang Proses,Selesai',
-        ]);
+        {
+            if (auth()->user()->level != 2) {
+                return redirect()->back()->with('error', 'Anda tidak memiliki izin untuk mengubah status.');
+            }
 
-        $pengaduan = M_Pengaduan::findOrFail($id_pengaduan);
-        $pengaduan->status = $request->status;
-        $pengaduan->save();
+            $request->validate([
+                'status' => 'required|in:Pengaduan,Sedang Proses,Selesai',
+            ]);
 
-        return redirect()->route('pengaduan.index')->with('success', 'Status pengaduan berhasil diperbarui.');
-    }
+            $pengaduan = M_Pengaduan::findOrFail($id_pengaduan);
+            $pengaduan->status = $request->status;
+            $pengaduan->save();
+
+            return redirect()->route('pengaduan.index')->with('success', 'Status pengaduan berhasil diperbarui.');
+        }
+
 
     public function halamanPengaduan()
     {
@@ -169,4 +171,5 @@ class C_Pengaduan extends Controller
         $data_pengaduan = M_Pengaduan::all(); 
         return view('v_pengaduandata', compact('data_pengaduan'));
     }
+    
 }

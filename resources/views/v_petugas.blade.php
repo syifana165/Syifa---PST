@@ -79,8 +79,8 @@
             </div>
             @endif
 
-            <div id_petugas="print-area" class="table-responsive">
-                <table id_petugas="example1" class="table table-bordered text-center">
+            <div id="print-area" class="table-responsive">
+                <table id="example1" class="table table-bordered text-center">
                     <thead style="background-color: #4caf50; color: white;">
                         <tr>
                             <th>No</th>
@@ -100,45 +100,44 @@
                             <td class="text-left">{{ $data->Alamat }}</td>
                             <td class="text-left">{{ $data->keterangan }}</td>
                             <td class="no-print">
-                            <div class="d-flex justify-content-center gap-2">
-                                <a href="{{ route('petugas.detail', ['id_petugas' => $data->id_petugas]) }}" class="btn btn-info btn-sm" title="Detail">
-                                    <i class="fas fa-info-circle"></i>
-                                </a>
-                                <a href="{{ route('petugas.edit', ['id_petugas' => $data->id_petugas]) }}" class="btn btn-warning btn-sm" title="Edit">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete{{ $key }}" title="Delete">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                            </div>
+                                <div class="d-flex justify-content-center gap-2">
+                                    <a href="{{ route('petugas.detail', ['id_petugas' => $data->id_petugas]) }}" class="btn btn-info btn-sm" title="Detail">
+                                        <i class="fas fa-info-circle"></i>
+                                    </a>
+                                    <a href="{{ route('petugas.edit', ['id_petugas' => $data->id_petugas]) }}" class="btn btn-warning btn-sm" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete{{ $key }}" title="Delete">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </div>
 
-    <!-- Modal Hapus -->
-    <div class="modal fade no-print" id_petugas="delete{{ $key }}" tabindex="-1" role="dialog" aria-labelledby="modalDeleteLabel{{ $key }}" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <form action="{{ route('petugas.destroy', ['id_petugas' => $data->id_petugas]) }}" method="POST" style="display:inline;">
-                @csrf
-                @method('DELETE')
-                <div class="modal-content">
-                    <div class="modal-header bg-danger text-white">
-                        <h5 class="modal-title" id_petugas="modalDeleteLabel{{ $key }}">Konfirmasi Hapus</h5>
-                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        Yakin ingin menghapus petugas <strong>{{ $data->Nama }}</strong>?
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-danger">Hapus</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-    <!-- End Modal -->
-</td>
-
+                                <!-- Modal Hapus -->
+                                <div class="modal fade no-print" id="delete{{ $key }}" tabindex="-1" role="dialog" aria-labelledby="modalDeleteLabel{{ $key }}" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <form action="{{ route('petugas.destroy', ['id_petugas' => $data->id_petugas]) }}" method="POST" style="display:inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <div class="modal-content">
+                                                <div class="modal-header bg-danger text-white">
+                                                    <h5 class="modal-title" id="modalDeleteLabel{{ $key }}">Konfirmasi Hapus</h5>
+                                                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Yakin ingin menghapus petugas <strong>{{ $data->Nama }}</strong>?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                                    <button type="submit" class="btn btn-danger">Hapus</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!-- End Modal -->
+                            </td>
                         </tr>
                         @empty
                         <tr>
@@ -170,33 +169,33 @@
 </div>
 
 <!-- Modal Tambah Petugas -->
-<div class="modal fade no-print" id_petugas="modalAddPetugas" tabindex="-1" role="dialog">
+<div class="modal fade" id="modalAddPetugas" tabindex="-1" role="dialog" aria-labelledby="modalAddPetugasLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <form action="{{ route('petugas.store') }}" method="POST">
             @csrf
             <div class="modal-content" style="background-color: #f0fff0;">
                 <div class="modal-header text-white" style="background-color: #4caf50;">
-                    <h5 class="modal-title">Tambah Petugas</h5>
+                    <h5 class="modal-title" id="modalAddPetugasLabel">Tambah Petugas</h5>
                     <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group mb-3">
+                    <div class="form-group">
                         <label>Nama</label>
-                        <input type="text" name="Nama" class="form-control" required>
+                        <input type="text" name="nama" class="form-control" placeholder="Masukkan nama petugas" required>
                     </div>
-                    <div class="form-group mb-3">
+                    <div class="form-group">
                         <label>No HP</label>
-                        <input type="text" name="No_HP" class="form-control" required>
+                        <input type="text" name="no_hp" class="form-control" placeholder="Contoh: 08123456789" required>
                     </div>
-                    <div class="form-group mb-3">
+                    <div class="form-group">
                         <label>Alamat</label>
-                        <textarea name="Alamat" class="form-control" required></textarea>
+                        <textarea name="alamat" class="form-control" placeholder="Masukkan alamat petugas" required></textarea>
                     </div>
-                    <div class="form-group mb-3">
+                    <div class="form-group">
                         <label>Keterangan</label>
-                        <textarea name="keterangan" class="form-control"></textarea>
+                        <textarea name="keterangan" class="form-control" placeholder="Tambahan informasi (opsional)"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -207,5 +206,6 @@
         </form>
     </div>
 </div>
+
 
 @endsection

@@ -33,7 +33,7 @@
                     <thead class="bg-danger text-white">
                         <tr>
                             <th>No</th>
-                            <th class="text-start">Nama</th>
+                            <th class="text-start">Nama Petugas</th>
                             <th class="text-start">No HP</th>
                             <th style="min-width: 110px;">Tanggal</th>
                             <th class="text-start">Lokasi Tugas</th>
