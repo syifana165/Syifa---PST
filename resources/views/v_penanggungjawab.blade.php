@@ -117,7 +117,7 @@
                     <td>{{ $pj->No_HP }}</td>
                     <td>{{ $pj->Alamat }}</td>
                     <td>{{ $pj->TPS }}</td>
-                    <td><span class="badge-status">{{ $pj->Keterangan }}</span></td>
+                    <td>{{ $pj->Keterangan }}</td>
                 </tr>
             @empty
                 <tr>
@@ -136,9 +136,16 @@
         const rows = document.querySelectorAll('#dataTable tr');
 
         rows.forEach(row => {
-            const text = row.textContent.toLowerCase();
-            row.style.display = text.includes(input) ? '' : 'none';
+            const nama = row.cells[0]?.innerText.toLowerCase() || '';
+            const nohp = row.cells[1]?.innerText.toLowerCase() || '';
+            const alamat = row.cells[2]?.innerText.toLowerCase() || '';
+
+            const cocok = nama.includes(input) || nohp.includes(input) || alamat.includes(input);
+
+            row.style.display = cocok ? '' : 'none';
         });
     }
+</script>
+
 </script>
 @endsection

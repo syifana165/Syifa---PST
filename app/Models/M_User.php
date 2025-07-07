@@ -15,15 +15,12 @@ class M_User extends Authenticatable
         'nama',
         'email',
         'password',
-        'level', 
+        'role', 
+        'username',
     ];
 
     protected $hidden = [
         'password',
         'remember_token',
-    ];
-
-    protected $casts = [
-        'email_verified_at' => 'datetime',
     ];
 }

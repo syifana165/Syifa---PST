@@ -201,14 +201,25 @@
                 <h2>{{ $countPetugas }}</h2>
             </div>
             <div class="card filter-box">
-                <form method="GET" action="{{ route('data.pj_petugas') }}">
-                    <label for="jenis">Tampilkan Data:</label>
-                    <select name="jenis" id="jenis" onchange="this.form.submit()">
-                        <option value="" {{ request('jenis') == '' ? 'selected' : '' }}>Tampilkan</option>
-                        <option value="pj" {{ request('jenis') == 'pj' ? 'selected' : '' }}>Penanggung Jawab</option>
-                        <option value="petugas" {{ request('jenis') == 'petugas' ? 'selected' : '' }}>Petugas</option>
-                    </select>
-                </form>
+            <form method="GET" id="redirectForm">
+    <label for="jenis">Tampilkan Data:</label>
+    <select name="jenis" id="jenis" onchange="handleRedirect(this.value)">
+        <option value="">Tampilkan</option>
+        <option value="pj">Penanggung Jawab</option>
+        <option value="petugas">Petugas</option>
+    </select>
+</form>
+
+<script>
+    function handleRedirect(value) {
+        if (value === "pj") {
+            window.location.href = "{{ route('pj.index') }}";
+        } else if (value === "petugas") {
+            window.location.href = "{{ route('petugas.index') }}";
+        }
+    }
+</script>
+
             </div>
         </div>
 

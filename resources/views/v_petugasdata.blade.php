@@ -115,7 +115,7 @@
                     <td>{{ $petugas->Nama }}</td>
                     <td>{{ $petugas->No_HP }}</td>
                     <td>{{ $petugas->Alamat }}</td>
-                    <td><span class="badge-status">{{ $petugas->keterangan ?? '-' }}</span></td>
+                    <td>{{ $petugas->tim->Kelompok_Petugas ?? '-' }}</td>
                 </tr>
             @empty
                 <tr>
@@ -134,9 +134,16 @@
         const rows = document.querySelectorAll('#dataTable tr');
 
         rows.forEach(row => {
-            const text = row.textContent.toLowerCase();
-            row.style.display = text.includes(input) ? '' : 'none';
+            const nama = row.cells[0]?.innerText.toLowerCase() || '';
+            const nohp = row.cells[1]?.innerText.toLowerCase() || '';
+            const alamat = row.cells[2]?.innerText.toLowerCase() || '';
+
+            const cocok = nama.includes(input) || nohp.includes(input) || alamat.includes(input);
+
+            row.style.display = cocok ? '' : 'none';
         });
     }
 </script>
+
+
 @endsection

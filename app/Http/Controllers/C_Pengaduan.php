@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\M_Pengaduan;
-use App\Models\M_Penugasan; // jangan lupa import model penugasan
+use App\Models\M_Penugasan;
 
 class C_Pengaduan extends Controller
 {
@@ -18,33 +18,24 @@ class C_Pengaduan extends Controller
 
     public function index(Request $request)
     {
-        $user = auth()->user();
-
-        if (!in_array($user->level, [1, 2])) {
-            abort(403, 'Anda tidak memiliki akses.');
-        }
-
         $query = DB::table('tb_pengaduan');
 
-        if ($request->has('search') && $request->search != '') {
+        if ($request->filled('search')) {
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->where('Nama', 'like', "%{$search}%")
-                    ->orWhere('Alamat', 'like', "%{$search}%")
-                    ->orWhere('Pengaduan', 'like', "%{$search}%");
+                  ->orWhere('Alamat', 'like', "%{$search}%")
+                  ->orWhere('Pengaduan', 'like', "%{$search}%");
             });
         }
 
         $pengaduan = $query->get();
-
         $totalPengaduan = DB::table('tb_pengaduan')->count();
-        $pengaduanSelesai = DB::table('tb_pengaduan')->where('status', 'selesai')->count();
-        return view('v_pengaduan', compact(
-            'pengaduan',
-            'totalPengaduan',
-            'pengaduanSelesai'
-        ));
+        $pengaduanSelesai = DB::table('tb_pengaduan')->where('status', 'Selesai')->count();
+
+        return view('v_pengaduan', compact('pengaduan', 'totalPengaduan', 'pengaduanSelesai'));
     }
+
     public function detail($id_pengaduan)
     {
         $pengaduan = M_Pengaduan::findOrFail($id_pengaduan);
@@ -68,7 +59,6 @@ class C_Pengaduan extends Controller
             $file->move(public_path('foto_pengaduan'), $foto_pengaduan);
         }
 
-        // Simpan pengaduan dulu
         $pengaduan = M_Pengaduan::create([
             'Nama' => $request->nama,
             'Alamat' => $request->alamat,
@@ -79,7 +69,6 @@ class C_Pengaduan extends Controller
             'status' => 'Pengaduan',
         ]);
 
-        // Simpan data ke penugasan berdasar pengaduan yg baru dibuat
         M_Penugasan::create([
             'id_pengaduan' => $pengaduan->id_pengaduan,
             'nama' => $pengaduan->Nama,
@@ -89,7 +78,7 @@ class C_Pengaduan extends Controller
             'status' => $pengaduan->status,
         ]);
 
-        return redirect()->route('pengaduan')->with('pesan', 'Pengaduan berhasil ditambahkan dan penugasan otomatis dibuat!');
+        return redirect()->route('pengaduan.index')->with('pesan', 'Pengaduan berhasil ditambahkan dan penugasan otomatis dibuat!');
     }
 
     public function destroy($id_pengaduan)
@@ -111,11 +100,11 @@ class C_Pengaduan extends Controller
     public function store(Request $request)
     {
         $data = new M_Pengaduan;
-        $data->Nama = $request->input('Nama');
-        $data->Alamat = $request->input('Alamat');
-        $data->No_HP = $request->input('No_HP');
-        $data->Tanggal = $request->input('Tanggal');
-        $data->Pengaduan = $request->input('Pengaduan');
+        $data->Nama = $request->Nama;
+        $data->Alamat = $request->Alamat;
+        $data->No_HP = $request->No_HP;
+        $data->Tanggal = $request->Tanggal;
+        $data->Pengaduan = $request->Pengaduan;
         $data->status = 'Pengaduan';
 
         if ($request->hasFile('Foto_Pengaduan')) {
@@ -140,27 +129,26 @@ class C_Pengaduan extends Controller
     }
 
     public function ubahStatus(Request $request, $id_pengaduan)
-        {
-            if (auth()->user()->level != 2) {
-                return redirect()->back()->with('error', 'Anda tidak memiliki izin untuk mengubah status.');
-            }
-
-            $request->validate([
-                'status' => 'required|in:Pengaduan,Sedang Proses,Selesai',
-            ]);
-
-            $pengaduan = M_Pengaduan::findOrFail($id_pengaduan);
-            $pengaduan->status = $request->status;
-            $pengaduan->save();
-
-            return redirect()->route('pengaduan.index')->with('success', 'Status pengaduan berhasil diperbarui.');
+    {
+        // Cek apakah user adalah kepala_bidang
+        if (auth()->user()->role === 'kepala bidang') {
+            return redirect()->back()->with('error', 'Anda tidak memiliki izin untuk mengubah status.');
         }
 
+        $request->validate([
+            'status' => 'required|in:Pengaduan,Sedang Proses,Selesai',
+        ]);
+
+        $pengaduan = M_Pengaduan::findOrFail($id_pengaduan);
+        $pengaduan->status = $request->status;
+        $pengaduan->save();
+
+        return redirect()->route('pengaduan.index')->with('success', 'Status pengaduan berhasil diperbarui.');
+    }
 
     public function halamanPengaduan()
     {
         $userEmail = auth()->user()->email;
-
         $pengaduanUser = M_Pengaduan::where('email', $userEmail)->get();
 
         return view('v_halaman', compact('pengaduanUser'));
@@ -171,5 +159,4 @@ class C_Pengaduan extends Controller
         $data_pengaduan = M_Pengaduan::all(); 
         return view('v_pengaduandata', compact('data_pengaduan'));
     }
-    
 }

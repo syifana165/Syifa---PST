@@ -47,6 +47,7 @@
                         <th>Pengaduan</th>
                         <th>Kelompok</th>
                         <th>Status</th>
+                        <th class="no-print text-center" style="width: 150px;">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -57,12 +58,29 @@
                             <td>{{ optional($d->pengaduan)->Tanggal ? \Carbon\Carbon::parse($d->pengaduan->Tanggal)->format('d-m-Y') : '-' }}</td>
                             <td>{{ $d->pengaduan->Alamat ?? '-' }}</td>
                             <td>{{ $d->pengaduan->Pengaduan ?? '-' }}</td>
-                            <td>{{ $d->petugas->keterangan ?? '-' }}</td>
+                            <td>{{ $d->kelompok_petugas ?? '-' }}</td>
                             <td><span class="badge badge-info">{{ $d->pengaduan->status ?? '-' }}</span></td>
+                            <td class="text-center no-print">
+                                <a href="{{ route('penugasan.detail', $d->id_penugasan) }}" class="btn btn-info btn-sm mb-1" title="Detail">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                @if(Auth::user()->level != 1)
+                                    <a href="{{ route('penugasan.edit', $d->id_penugasan) }}" class="btn btn-warning btn-sm mb-1" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <form action="{{ route('penugasan.destroy', $d->id_penugasan) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus penugasan ini?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm" title="Hapus">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                @endif
+                            </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="7" class="text-center text-muted">Tidak ada data penugasan.</td>
+                            <td colspan="8" class="text-center text-muted">Tidak ada data penugasan.</td>
                         </tr>
                     @endforelse
                 </tbody>
@@ -76,9 +94,11 @@
                 <i class="fas fa-arrow-left"></i> Kembali
             </a>
             <div>
+                @if(Auth::user()->level != 1)
                 <button class="btn btn-success btn-sm btn-glow" data-toggle="modal" data-target="#modalAddPenugasan">
                     + Tambah Penugasan
                 </button>
+                @endif
                 <a href="javascript:window.print()" class="btn btn-info btn-sm">
                     <i class="fas fa-print"></i> Print
                 </a>
@@ -88,6 +108,7 @@
 </div>
 
 <!-- Modal Tambah Penugasan -->
+@if(Auth::user()->level != 1)
 <div class="modal fade no-print" id="modalAddPenugasan" tabindex="-1">
     <div class="modal-dialog">
         <form action="{{ route('penugasan.store') }}" method="POST">
@@ -117,23 +138,23 @@
                     <!-- Dropdown Petugas -->
                     <div class="form-group">
                         <label for="id_petugas">Pilih Petugas</label>
-                        <select name="id_petugas" class="form-control" required>
+                        <select name="id_petugas" id="id_petugas" class="form-control" required>
                             <option value="">-- Pilih Petugas --</option>
                             @foreach($petugas as $pt)
-                                <option value="{{ $pt->id_petugas }}">{{ $pt->Nama }}</option>
+                                <option 
+                                    value="{{ $pt->id_petugas }}"
+                                    data-kelompok="{{ $pt->tim->Kelompok_Petugas ?? '' }}">
+                                    {{ $pt->Nama }}
+                                </option>
                             @endforeach
                         </select>
                     </div>
 
-                    <!-- Dropdown Kelompok Petugas -->
+                    <!-- Input Kelompok Petugas (Otomatis) -->
                     <div class="form-group">
-                        <label for="kelompok_petugas">Kelompok Petugas</label>
-                        <select name="kelompok_petugas" class="form-control" required>
-                            <option value="">-- Pilih Kelompok --</option>
-                            @foreach($petugas as $pt)
-                                <option value="{{ $pt->keterangan }}">{{ $pt->keterangan }}</option>
-                            @endforeach
-                        </select>
+                        <label for="Kelompok_Petugas">Kelompok Petugas</label>
+                        <input type="hidden" name="kelompok_petugas" id="Hidden_Kelompok_Petugas">
+                        <input type="text" class="form-control" id="Kelompok_Petugas" readonly placeholder="Kelompok akan muncul otomatis">
                     </div>
                 </div>
 
@@ -145,6 +166,7 @@
         </form>
     </div>
 </div>
+@endif
 
 <!-- Script Toggle Mode -->
 <script>
@@ -154,6 +176,19 @@
         icon.classList.toggle('fa-moon');
         icon.classList.toggle('fa-sun');
     });
+</script>
+
+<!-- Script Set Kelompok -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const select = document.getElementById('id_petugas');
+    select?.addEventListener('change', function () {
+        const selectedOption = select.options[select.selectedIndex];
+        const kelompok = selectedOption.getAttribute('data-kelompok') || '';
+        document.getElementById('Kelompok_Petugas').value = kelompok;
+        document.getElementById('Hidden_Kelompok_Petugas').value = kelompok;
+    });
+});
 </script>
 
 @endsection

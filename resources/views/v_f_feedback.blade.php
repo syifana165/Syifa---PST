@@ -292,8 +292,8 @@
             <label for="Email">Email</label>
             <input type="email" name="Email" id="Email" autocomplete="off" placeholder="Masukkan email Anda" required value="{{ old('Email') }}" />
 
-            <label for="Feedback">Feedback</label>
-            <textarea name="Feedback" id="Feedback" placeholder="Tulis feedback Anda di sini..." required>{{ old('Feedback') }}</textarea>
+            <label for="Feedback">Kritik & Saran</label>
+            <textarea name="Feedback" id="Feedback" placeholder="Tulis Kritik & Saran Anda di sini..." required>{{ old('Feedback') }}</textarea>
 
             <div class="button-container">
                 <button type="submit" class="btn-submit">Kirim</button>

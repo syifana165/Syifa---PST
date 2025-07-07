@@ -24,7 +24,7 @@
             <td>{{ $d->petugas->Nama ?? '-' }}</td>
             <td>{{ isset($d->pengaduan->Tanggal) ? \Carbon\Carbon::parse($d->pengaduan->Tanggal)->format('d-m-Y') : '-' }}</td>
             <td>{{ $d->pengaduan->Alamat ?? '-' }}</td>
-            <td>{{ $d->petugas->keterangan ?? '-' }}</td>
+            <td>{{ $d->kelompok_petugas ?? '-' }}</td>
             <td>{{ $d->pengaduan->status ?? '-' }}</td>
             <td>
             <a href="{{ route('laporan.create', $d->id_penugasan) }}" class="btn btn-sm btn-primary">+ Laporan</a>

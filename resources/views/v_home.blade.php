@@ -2,52 +2,56 @@
 
 @section('content')
 
-{{-- Styles --}}
 <style>
     body {
-        background: #f4f8f4;
+        background: #0B2447;
         font-family: 'Segoe UI', sans-serif;
     }
     .dashboard-title {
-        color: #2f684e;
+        color: #ffffff;
         font-weight: bold;
     }
     .eco-card {
-        background: linear-gradient(to bottom right, #eafaf1, #c7eacb);
-        border-left: 5px solid #4caf50;
+        background: #112B3C;
+        border-left: 5px solid #19376D;
         border-radius: 12px;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-        color: #2d4739;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        color: #ffffff;
         transition: 0.3s ease;
     }
     .eco-card:hover {
         transform: translateY(-3px);
-        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        box-shadow: 0 8px 16px rgba(0,0,0,0.2);
     }
     .eco-icon {
         font-size: 2rem;
-        color: #388e3c;
+        color: #64CCC5;
     }
     .eco-value {
         font-size: 1.8rem;
         font-weight: bold;
-        color: #1b4332;
+        color: #F5F7FA;
     }
     .eco-label {
         font-size: 1rem;
-        color: #3a5a40;
+        color: #A5C9CA;
     }
     .card-header {
-        background-color: #4caf50;
+        background-color: #19376D;
         color: white;
         font-weight: bold;
         border-radius: 12px 12px 0 0;
         padding: 10px 15px;
     }
+    .card-body.bg-light {
+        background-color: #1D2D50;
+    }
 </style>
 
-<div class="container-fluid mt-4">
-    <h2 class="text-center dashboard-title mb-5">🌱 Dashboard Dinas Lingkungan Hidup</h2>
+<h2 class="text-center dashboard-title mb-5" style="color: #06224e;">
+    📊 Dashboard Dinas Lingkungan Hidup
+</h2>
+
 
     <div class="row">
         @php
@@ -86,7 +90,6 @@
     </div>
 </div>
 
-<!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     const ctx = document.getElementById('totalChart').getContext('2d');
@@ -105,7 +108,7 @@
                     {{ $totalLaporan }}
                 ],
                 backgroundColor: [
-                    '#81c784', '#aed581', '#66bb6a', '#9ccc65', '#dce775', '#c5e1a5'
+                    '#102C57', '#19376D', '#1D2D50', '#2D4263', '#112B3C', '#435585'
                 ],
                 borderRadius: 8
             }]
@@ -117,13 +120,13 @@
             },
             scales: {
                 x: {
-                    ticks: { color: '#2e7d32' },
-                    grid: { color: 'rgba(0,0,0,0.05)' }
+                    ticks: { color: '#B4D4FF' },
+                    grid: { color: 'rgba(255,255,255,0.05)' }
                 },
                 y: {
                     beginAtZero: true,
-                    ticks: { color: '#2e7d32' },
-                    grid: { color: 'rgba(0,0,0,0.05)' }
+                    ticks: { color: '#B4D4FF' },
+                    grid: { color: 'rgba(255,255,255,0.05)' }
                 }
             }
         }

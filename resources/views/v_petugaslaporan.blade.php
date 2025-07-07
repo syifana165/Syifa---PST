@@ -5,15 +5,15 @@
 @section('content')
 <div class="container-fluid py-4">
     <div class="card shadow border-0">
-        <div class="card-header py-3 bg-danger text-white d-flex justify-content-between align-items-center">
-            <h3 class="card-title m-0">Data Laporan Petugas</h3>
+        <div class="card-header bg-white border-bottom d-flex justify-content-between align-items-center">
+            <h4 class="fw-bold text-secondary m-0">Daftar Laporan Petugas</h4>
             <form action="{{ route('laporan.index') }}" method="GET" class="d-flex" style="width: 350px;">
                 <input type="text" name="search" class="form-control form-control-sm" placeholder="Cari Nama..." value="{{ request('search') }}">
-                <button type="submit" class="btn btn-sm btn-light ms-2">
+                <button type="submit" class="btn btn-sm btn-outline-secondary ms-2">
                     <i class="fas fa-search"></i>
                 </button>
                 @if(request('search'))
-                <a href="{{ route('laporan.index') }}" class="btn btn-sm btn-secondary ms-2">
+                <a href="{{ route('laporan.index') }}" class="btn btn-sm btn-outline-dark ms-2">
                     <i class="fas fa-times"></i>
                 </a>
                 @endif
@@ -29,13 +29,13 @@
             @endif
 
             <div class="table-responsive" id="print-area">
-                <table class="table table-hover table-bordered mb-0 text-center align-middle">
-                    <thead class="bg-danger text-white">
+                <table class="table table-bordered align-middle mb-0 text-center" style="font-size: 0.95rem;">
+                    <thead class="table-light">
                         <tr>
                             <th>No</th>
                             <th class="text-start">Nama Petugas</th>
                             <th class="text-start">No HP</th>
-                            <th style="min-width: 110px;">Tanggal</th>
+                            <th>Tanggal</th>
                             <th class="text-start">Lokasi Tugas</th>
                             <th class="text-start">Deskripsi Tugas</th>
                             <th>Foto Bukti</th>
@@ -63,7 +63,7 @@
                                 @endif
                             </td>
                             <td class="no-print">
-                                <a href="{{ route('laporan.detail', $item->id_laporanpetugas) }}" class="btn btn-info btn-sm" title="Detail">
+                                <a href="{{ route('laporan.detail', $item->id_laporanpetugas) }}" class="btn btn-outline-primary btn-sm" title="Detail">
                                     <i class="fas fa-info-circle"></i>
                                 </a>
                             </td>
@@ -78,7 +78,7 @@
             </div>
 
             <div class="d-flex justify-content-end mt-3 p-3 no-print">
-                <button onclick="window.print()" class="btn btn-outline-danger btn-sm">
+                <button onclick="window.print()" class="btn btn-outline-dark btn-sm">
                     <i class="fas fa-print me-1"></i> Print
                 </button>
             </div>

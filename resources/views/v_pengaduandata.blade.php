@@ -14,30 +14,24 @@
         padding: 10px 30px 30px 30px;
     }
 
-    .header-logo {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        margin-bottom: 20px;
-    }
-
-    .logo-dlh {
-        height: 80px;
-        width: auto;
-        object-fit: contain;
-    }
-
-    .header-title {
-        font-size: 24px;
-        font-weight: bold;
-        color: #2d3436;
-    }
-
     h2 {
         font-size: 22px;
         margin-top: 5px;
         margin-bottom: 20px;
         color: #343a40;
+    }
+
+    .search-container {
+        margin-bottom: 15px;
+    }
+
+    #searchInput {
+        padding: 8px 15px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        width: 100%;
+        max-width: 300px;
     }
 
     table {
@@ -79,19 +73,9 @@
         white-space: nowrap;
     }
 
-
-    .bg-warning {
-        background-color: #ffc107 !important;
-        color: #212529;
-    }
-
-    .bg-primary {
-        background-color: #007bff !important;
-    }
-
-    .bg-success {
-        background-color: #28a745 !important;
-    }
+    .bg-warning { background-color: #ffc107 !important; color: #212529; }
+    .bg-primary { background-color: #007bff !important; }
+    .bg-success { background-color: #28a745 !important; }
 
     .btn-back {
         margin-top: 20px;
@@ -115,7 +99,18 @@
         font-style: italic;
     }
 </style>
+
+<div class="container">
     <h2>Data Pengaduan</h2>
+
+    <div class="search-container">
+        <input 
+            type="text" 
+            id="searchInput" 
+            placeholder="Cari Nama, Alamat, No HP, atau Pengaduan..." 
+            onkeyup="filterPengaduan()"
+        />
+    </div>
 
     <table>
         <thead>
@@ -129,7 +124,7 @@
                 <th>Status</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="pengaduanTable">
             @forelse($data_pengaduan as $pengaduan)
                 <tr>
                     <td>{{ $pengaduan->Nama }}</td>
@@ -167,4 +162,22 @@
 
     <a href="{{ route('v_halaman') }}" class="btn-back">← Kembali ke Beranda</a>
 </div>
+
+<script>
+    function filterPengaduan() {
+        const input = document.getElementById('searchInput').value.toLowerCase();
+        const rows = document.querySelectorAll('#pengaduanTable tr');
+
+        rows.forEach(row => {
+            const nama     = row.cells[0]?.innerText.toLowerCase() || '';
+            const alamat   = row.cells[1]?.innerText.toLowerCase() || '';
+            const tanggal  = row.cells[2]?.innerText.toLowerCase() || '';
+            const nohp     = row.cells[3]?.innerText.toLowerCase() || '';
+            const isi      = row.cells[4]?.innerText.toLowerCase() || '';
+
+            const cocok = nama.includes(input) || alamat.includes(input) || tanggal.includes(input) || nohp.includes(input) || isi.includes(input);
+            row.style.display = cocok ? '' : 'none';
+        });
+    }
+</script>
 @endsection

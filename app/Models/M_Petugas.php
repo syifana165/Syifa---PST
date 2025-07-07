@@ -13,5 +13,11 @@ class M_Petugas extends Model
     protected $primaryKey = 'id_petugas';
     public $timestamps = false; 
 
-    protected $fillable = ['Nama', 'No_HP', 'Alamat', 'keterangan']; 
+    protected $fillable = ['Nama', 'No_HP', 'Alamat', 'keterangan', 'id_tim']; 
+
+    public function tim()
+    {
+        return $this->belongsTo(M_Tim::class, 'id_tim', 'id_tim');
+    }
+
 }

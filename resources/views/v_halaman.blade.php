@@ -14,8 +14,9 @@
     body {
       margin: 0;
       font-family: 'Roboto', sans-serif;
-      background: #f4f6f8;
+      background: #ffffff;
     }
+
     header {
       position: fixed;
       top: 0;
@@ -366,6 +367,14 @@
         object-fit: cover;
       }
 
+      .hover-zoom {
+        transition: transform 0.3s ease;
+      }
+      .hover-zoom:hover {
+        transform: scale(1.05);
+      }
+
+      
   </style>
 </head>
 <body>
@@ -423,47 +432,113 @@
 </header>
 
 <!-- Hero Section -->
-<section class="hero">
-  <div class="video-wrapper">
-    <iframe 
-      src="https://www.youtube.com/embed/jncmKIIgg6I?autoplay=1&mute=1&controls=0&loop=1&playlist=jncmKIIgg6I&modestbranding=1&vq=hd1080" 
-      frameborder="0" 
-      allow="autoplay; fullscreen" 
-      allowfullscreen>
-    </iframe>
+<section class="hero" style="position: relative; height: 100vh; overflow: hidden;">
+  <!-- Ganti video dengan gambar -->
+  <div class="image-wrapper" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+    <img src="{{ asset('assets/img/hh.jpg') }}" alt="Hero Image" style="width: 100%; height: 100%; object-fit: cover;">
   </div>
-  <div class="hero-overlay"></div>
-  <div class="hero-content">
+
+  <!-- Overlay gelap di atas gambar -->
+  <div class="hero-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5);"></div>
+
+  <!-- Konten di atas gambar -->
+  <div class="hero-content" style="position: relative; z-index: 1; color: #fff; text-align: center; top: 50%; transform: translateY(-50%); padding: 0 20px;">
     <h1>Selamat Datang di Dinas Lingkungan Hidup Kab.Subang</h1>
     <p>Bersama menuju lingkungan bersih dan sehat</p>
   </div>
 </section>
 
-<!-- Pengaduan Masyarakat, Lokasi & QR -->
-<section id="pengaduan" class="py-5" style="background-color: #e6f5ff;">
+<section style="background-color: #f9f9f9; padding: 20px 40px; border-top: 4px solid #ffc107;">
+  <div class="container" style="display: flex; flex-direction: column; align-items: flex-start;">
+    <img src="{{ asset('assets/img/logo.jpg') }}" alt="Logo DLH Jawa Barat" style="max-height: 80px; margin-bottom: 10px;">
+    <h3 style="color: #444; font-weight: bold; margin: 0;">
+      Dinas Lingkungan Hidup Persampahan Kab.Subang
+    </h3>
+  </div>
+</section>
+
+<section id="berita-terkini" class="py-5 bg-white">
   <div class="container">
-    <h2 class="fw-bold text-primary mb-5">📋 Pengaduan Masyarakat</h2>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <div>
+        <h2 class="fw-bold text-dark mb-0">Berita Terkini</h2>
+        <p class="text-muted" style="max-width: 600px;">
+        Berikut berita terkini yang ada pada Dinas Lingkungan Hidup, Mencakup Semua Berita 
+      </p>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      <!-- Card Berita 1 -->
+      <div class="col-md-4">
+        <div class="card border-0 shadow-sm h-100">
+        <img src="assets/img/berita1.jpg" class="card-img-top" alt="Hari Lingkungan">
+          <div class="card-body">
+            <small class="text-muted d-block mb-1">Senin, 02 Juni 2025</small>
+            <h5 class="card-title fw-semibold">Hari Lingkungan Hidup Sedunia 2025</h5>
+            <p class="card-text small">DLH kampanyekan "Hentikan Polusi Plastik" menjelang Hari Lingkungan Hidup Sedunia.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card Berita 2 -->
+      <div class="col-md-4">
+        <div class="card border-0 shadow-sm h-100">
+        <img src="assets/img/berita2.jpg" class="card-img-top" alt="WTP Kab.Subang">
+          <div class="card-body">
+            <small class="text-muted d-block mb-1">Rabu, 28 Mei 2025</small>
+            <h5 class="card-title fw-semibold">Provinsi Jawa Barat Raih Opini WTP ke-14</h5>
+            <p class="card-text small">DLH turut mendukung transparansi dalam pelaporan keuangan daerah.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card Berita 3 -->
+      <div class="col-md-4">
+        <div class="card border-0 shadow-sm h-100">
+        <img src="assets/img/berita3.jpeg" class="card-img-top" alt="Anugrah Bangga">
+          <div class="card-body">
+            <small class="text-muted d-block mb-1">Senin, 18 Desember 2023</small>
+            <h5 class="card-title fw-semibold">Jawa Barat Raih Penghargaan Anugerah Bangga B</h5>
+            <p class="card-text small">Penghargaan diberikan atas kontribusi dalam pengelolaan lingkungan dan persampahan.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Pengaduan Masyarakat, Lokasi & QR -->
+<section id="pengaduan" class="py-5 position-relative" style="background: #ffffff; overflow: hidden;">
+
+  <div class="container position-relative" style="z-index: 1;">
+    <div class="text-start mb-4">
+      <h2 class="fw-bold" style="color: #092c52; font-size: 2.2rem;"> Sistem Pengaduan Masyarakat</h2>
+      <p class="text-muted" style="max-width: 600px;">
+        Sampaikan aspirasi, kritik, dan pengaduan Anda secara langsung kepada Dinas Lingkungan Hidup Kabupaten Subang untuk lingkungan yang lebih baik.
+      </p>
+    </div>
+
     <div class="row g-4 align-items-stretch">
-      
-      <!-- Daftar Pengaduan -->
+
+      <!-- Pengaduan Terbaru -->
       <div class="col-lg-6">
-        <div class="card shadow-sm border-0 h-100 rounded-4">
-          <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center rounded-top-4">
+        <div class="card border-0 shadow-lg rounded-4" style="animation: fadeUp 1s;">
+          <div class="card-header text-white d-flex justify-content-between align-items-center rounded-top-4"
+               style="background: linear-gradient(90deg, #00b09b, #96c93d);">
             <h5 class="mb-0"><i class="fas fa-bullhorn"></i> Pengaduan Terbaru</h5>
             <span class="badge bg-light text-dark">{{ $pengaduanTerbaru->count() }} pengaduan</span>
           </div>
-          <div class="card-body p-0 bg-white">
+          <div class="card-body p-0">
             @if ($pengaduanTerbaru->count())
               <ul class="list-group list-group-flush">
                 @foreach ($pengaduanTerbaru as $pengaduan)
                   <li class="list-group-item d-flex justify-content-between align-items-start">
                     <div class="ms-2 me-auto">
-                      <div class="fw-bold text-primary">
+                      <div class="fw-semibold text-primary">
                         <i class="fas fa-user-circle"></i> {{ $pengaduan->Nama }}
                       </div>
-                      <div class="text-dark">
-                        "{{ $pengaduan->Pengaduan }}"
-                      </div>
+                      <div class="text-muted">"{{ $pengaduan->Pengaduan }}"</div>
                       <small class="text-muted">
                         <i class="far fa-clock"></i> {{ \Carbon\Carbon::parse($pengaduan->Tanggal)->diffForHumans() }}
                       </small>
@@ -481,47 +556,48 @@
                 @endforeach
               </ul>
             @else
-              <div class="p-3 text-muted">Tidak ada pengaduan terbaru.</div>
+              <div class="p-3 text-muted">Belum ada pengaduan yang masuk.</div>
             @endif
           </div>
         </div>
       </div>
 
-      <!-- Lokasi + QR Code -->
+      <!-- Maps dan QR -->
       <div class="col-lg-6">
         <div class="row g-4">
 
-          <!-- Google Maps -->
+          <!-- Lokasi -->
           <div class="col-12">
-            <div class="card p-3 h-100 shadow-sm rounded-4 bg-white">
-              <h5 class="text-center mb-3">
-                <i class="fas fa-map-marker-alt text-danger me-2"></i>Lokasi DLH Kabupaten Subang
+            <div class="card p-3 shadow-lg rounded-4 border-0" style="animation: fadeUp 1.2s;">
+              <h5 class="text-center mb-3 text-dark">
+                <i class="fas fa-map-marker-alt text-danger me-2"></i> Lokasi DLH Kabupaten Subang
               </h5>
               <iframe 
                 src="https://www.google.com/maps?q=Dinas+Lingkungan+Hidup+Kabupaten+Subang&output=embed"
                 width="100%" 
                 height="300" 
                 style="border:0; border-radius: 12px;" 
-                allowfullscreen="" 
-                loading="lazy" 
-                referrerpolicy="no-referrer-when-downgrade">
+                allowfullscreen 
+                loading="lazy">
               </iframe>
             </div>
           </div>
 
           <!-- QR Code -->
           <div class="col-12">
-            <div class="card p-3 text-center h-100 shadow-sm rounded-4 bg-white">
-              <h5 class="mb-3">
-                <i class="fas fa-qrcode text-success me-2"></i>Scan untuk Isi Pengaduan
+            <div class="card p-4 text-center shadow-lg rounded-4 border-0" style="animation: fadeUp 1.4s;">
+              <h5 class="mb-3 text-success">
+                <i class="fas fa-qrcode me-2"></i> Scan untuk Isi Pengaduan
               </h5>
-              <img 
-                src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=http://192.168.1.10:8000/form"
-                alt="QR Form Pengaduan" 
-                class="img-fluid rounded mx-auto" 
-                style="max-width: 150px;"
-              />
-              <p class="mt-3">Arahkan kamera Anda ke barcode untuk langsung menuju Form Pengaduan Online.</p>
+              <div class="d-flex justify-content-center">
+                <img 
+                  src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=http://192.168.1.10:8000/form"
+                  alt="QR Form Pengaduan" 
+                  class="img-fluid rounded shadow-sm hover-zoom" 
+                  style="max-width: 160px;"
+                />
+              </div>
+              <p class="mt-3 text-muted small">Arahkan kamera ke barcode untuk akses form pengaduan online DLH Subang.</p>
             </div>
           </div>
 
@@ -532,136 +608,343 @@
   </div>
 </section>
 
+<!-- Animasi -->
+<style>
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.hover-zoom {
+  transition: transform 0.3s ease;
+}
+.hover-zoom:hover {
+  transform: scale(1.08);
+}
+</style>
 
 <!-- Layanan -->
-<section id="layanan-online" class="py-5" style="background-color: #e6f5ff;">
-  <div class="container text-center">
-    <h2 class="mb-5 fw-bold text-primary">💼 Layanan Dinas Lingkungan Hidup</h2>
-    <div class="row justify-content-center g-4">
+<section id="layanan-online" class="py-5" style="background: #ffffff;">
+  <div class="container">
+    <div class="mb-5">
+      <h2 class="fw-bold text-start" style="color: #01579b;">Layanan Dinas Lingkungan Hidup</h2>
+      <p class="text-muted text-start" style="max-width: 600px; font-size: 15px;">
+        Layanan digital untuk masyarakat menyampaikan pengaduan, saran, dan mengakses data petugas secara mudah dan cepat.
+      </p>
+    </div>
+
+    <div class="row g-4">
 
       <!-- Pengaduan -->
-      <div class="col-6 col-md-2">
-        <a href="{{ route('form.store') }}" class="layanan-box">
-          <div class="layanan-icon">
-            <img src="https://img.icons8.com/color/96/000000/customer-support.png" alt="Pengaduan">
+      <div class="col-6 col-md-3">
+        <a href="{{ route('form.store') }}" class="layanan-box-new">
+          <div class="layanan-icon-new" style="background-color: #2196f3;">
+            <svg width="40" height="40" fill="#fff" viewBox="0 0 24 24">
+              <path d="M18.707 17.293l-1.414 1.414L12 13.414 6.707 18.707l-1.414-1.414L10.586 12 5.293 6.707 6.707 5.293 12 10.586l5.293-5.293 1.414 1.414L13.414 12l5.293 5.293z"/>
+            </svg>
           </div>
-          <p class="layanan-title">Pengaduan</p>
+          <p class="layanan-title-new">Pengaduan</p>
         </a>
       </div>
 
-      <!-- Feedback -->
-      <div class="col-6 col-md-2">
-        <a href="{{ route('feedback.form') }}" class="layanan-box">
-          <div class="layanan-icon">
-            <img src="https://img.icons8.com/color/96/000000/feedback.png" alt="Feedback">
+      <!-- Kritik & Saran -->
+      <div class="col-6 col-md-3">
+        <a href="{{ route('feedback.form') }}" class="layanan-box-new">
+          <div class="layanan-icon-new" style="background-color: #fbc02d;">
+            <svg width="40" height="40" fill="#fff" viewBox="0 0 24 24">
+              <path d="M20 2H4a2 2 0 0 0-2 2v20l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2z"/>
+            </svg>
           </div>
-          <p class="layanan-title">Kritik & Saran</p>
+          <p class="layanan-title-new">Kritik & Saran</p>
         </a>
       </div>
 
       <!-- Laporan Petugas -->
-      <div class="col-6 col-md-2">
-        <a href="{{ route('login') }}" class="layanan-box">
-          <div class="layanan-icon">
-            <img src="https://img.icons8.com/color/96/000000/task.png" alt="Laporan Petugas">
+      <div class="col-6 col-md-3">
+        <a href="{{ route('login') }}" class="layanan-box-new">
+          <div class="layanan-icon-new" style="background-color: #4caf50;">
+            <svg width="40" height="40" fill="#fff" viewBox="0 0 24 24">
+              <path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h12v2H3v-2z"/>
+            </svg>
           </div>
-          <p class="layanan-title">Laporan Petugas</p>
+          <p class="layanan-title-new">Laporan Petugas</p>
         </a>
       </div>
-      
+
       <!-- Data Petugas -->
-      <div class="col-6 col-md-2">
-        <a href="{{ route('data.petugas_public') }}" class="layanan-box">
-            <div class="layanan-icon">
-                <img src="https://img.icons8.com/color/96/000000/conference.png" alt="Data Petugas">
-            </div>
-            <p class="layanan-title">Data Petugas</p>
+      <div class="col-6 col-md-3">
+        <a href="{{ route('data.petugas_public') }}" class="layanan-box-new">
+          <div class="layanan-icon-new" style="background-color: #e53935;">
+            <svg width="40" height="40" fill="#fff" viewBox="0 0 24 24">
+              <path d="M12 12c2.21 0 4-1.79 4-4S14.21 4 12 4s-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+            </svg>
+          </div>
+          <p class="layanan-title-new">Data Petugas</p>
         </a>
-    </div>
+      </div>
+
     </div>
   </div>
 </section>
 
 <style>
-  .layanan-box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-decoration: none;
-    background: #ffffff;
-    padding: 25px 15px;
-    border-radius: 20px;
-    border: 2px solid #d6ecff;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    transition: all 0.3s ease;
-    height: 100%;
-  }
+.layanan-box-new {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 28px 20px;
+  text-align: center;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-  .layanan-box:hover {
-    transform: translateY(-5px);
-    border-color: #3399ff;
-    box-shadow: 0 10px 25px rgba(51, 153, 255, 0.25);
-  }
+.layanan-box-new:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 28px rgba(0, 123, 255, 0.15);
+}
 
-  .layanan-icon {
-    width: 70px;
-    height: 70px;
-    margin-bottom: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+.layanan-icon-new {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+}
 
-  .layanan-icon img {
-    width: 100%;
-    height: auto;
-  }
+.layanan-title-new {
+  font-size: 16px;
+  font-weight: 600;
+  color: #01579b;
+  margin: 0;
+}
 
-  .layanan-title {
-    margin: 0;
-    font-weight: 600;
-    font-size: 16px;
-    color: #004d2c;
+@media (max-width: 768px) {
+  .layanan-title-new {
+    font-size: 14px;
   }
-
-  @media (max-width: 768px) {
-    .layanan-box {
-      padding: 20px 10px;
-    }
-
-    .layanan-title {
-      font-size: 14px;
-    }
-  }
+}
 </style>
 
+
 <!-- Berita & Video -->
-<section id="berita" class="py-5" style="background-color: #e6f5ff;">
-  <div class="container">
-    <h2 class="text-center fw-bold text-primary mb-5">📰 Berita & Video</h2>
-    <div class="row">
-      <div class="col-md-6">
-        <iframe class="video-embed" src="https://www.youtube.com/embed/xVjsb97pDk8" allowfullscreen></iframe>
+<section id="edukasi" class="py-5" style="background: #ffffff;">
+      <div class="container">
+      <div class="d-flex align-items-center mb-4">
+      <div>
+        <h2 class="fw-bold text-dark mb-0">Tips Ramah Lingkungan</h2>
+        <p class="text-muted mb-0" style="font-size: 0.95rem;">
+          Langkah kecilmu hari ini, pengaruh besar untuk bumi besok 🌏
+        </p>
       </div>
+    </div>
+    <div class="row g-4">
+
+      <!-- Tip 1 -->
+      <div class="col-md-12">
+        <div class="d-flex justify-content-between align-items-center p-4 rounded-4 shadow-sm hover-card bg-white">
+          <div class="d-flex align-items-center">
+            <div class="icon-wrapper me-4">
+              <img src="https://img.icons8.com/fluency/64/shopping-bag.png" alt="Tote Bag">
+            </div>
+            <div>
+              <h5 class="fw-bold text-info mb-1">Kurangi Sampah Plastik</h5>
+              <p class="text-muted small mb-0">Gunakan tote bag dan botol minum sendiri agar lebih hemat dan bersih.</p>
+            </div>
+          </div>
+          <img src="{{ asset('assets/img/sasa.jpeg') }}" alt="Gambar Sampah" width="100" class="img-thumbnail d-none d-md-block" data-bs-toggle="modal" data-bs-target="#modalSampah">
+        </div>
+      </div>
+
+      <!-- Tip 2 -->
+      <div class="col-md-12">
+        <div class="d-flex justify-content-between align-items-center p-4 rounded-4 shadow-sm hover-card bg-white">
+          <div class="d-flex align-items-center">
+            <div class="icon-wrapper me-4">
+              <img src="https://img.icons8.com/color/64/light-on--v1.png" alt="Energy Icon">
+            </div>
+            <div>
+              <h5 class="fw-bold text-warning mb-1">Hemat Energi</h5>
+              <p class="text-muted small mb-0">Cabut charger saat tidak digunakan dan gunakan lampu LED.</p>
+            </div>
+          </div>
+          <img src="{{ asset('assets/img/hemat.png') }}" alt="Gambar Energi" width="100" class="img-thumbnail d-none d-md-block" data-bs-toggle="modal" data-bs-target="#modalEnergi">
+        </div>
+      </div>
+
+      <!-- Tip 3 -->
+      <div class="col-md-12">
+        <div class="d-flex justify-content-between align-items-center p-4 rounded-4 shadow-sm hover-card bg-white">
+          <div class="d-flex align-items-center">
+            <div class="icon-wrapper me-4">
+              <img src="https://img.icons8.com/color/64/water.png" alt="Water Icon">
+            </div>
+            <div>
+              <h5 class="fw-bold text-primary mb-1">Hemat Air</h5>
+              <p class="text-muted small mb-0">Matikan keran saat sikat gigi dan gunakan air secukupnya saat mencuci.</p>
+            </div>
+          </div>
+          <img src="{{ asset('assets/img/air.jpeg') }}" alt="Gambar Air" width="100" class="img-thumbnail d-none d-md-block" data-bs-toggle="modal" data-bs-target="#modalAir">
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Modal: Gambar Sampah -->
+<div class="modal fade" id="modalSampah" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-white border-0 text-center p-3">
+      <img src="{{ asset('assets/img/sasa.jpeg') }}" class="modal-image img-fluid rounded" alt="Sampah Plastik">
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Gambar Energi -->
+<div class="modal fade" id="modalEnergi" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-white border-0 text-center p-3">
+      <img src="{{ asset('assets/img/hemat.png') }}" class="modal-image img-fluid rounded" alt="Hemat Energi">
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Gambar Air -->
+<div class="modal fade" id="modalAir" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-white border-0 text-center p-3">
+      <img src="{{ asset('assets/img/air.jpeg') }}" class="modal-image img-fluid rounded" alt="Hemat Air">
+    </div>
+  </div>
+</div>
+
+
+<style>
+.hover-card {
+  transition: all 0.3s ease;
+  border: 1px solid #f0f0f0;
+}
+.hover-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.08);
+}
+.icon-wrapper {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.img-thumbnail {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+.img-thumbnail:hover {
+  transform: scale(1.05);
+}
+</style>
+
+
+<section id="lingkup-kerja" class="py-5 bg-white">
+  <div class="container">
+    <h2 class="fw-bold mb-3">Lingkup Kerja Dinas Lingkungan Hidup Kab. Subang</h2>
+    <p class="text-muted mb-5" style="max-width: 700px;">
+      Dinas Lingkungan Hidup dalam melaksanakan tugas pokok dan fungsinya sebagai Instansi Pemerintah yang membidangi beberapa bidang.
+    </p>
+
+    <div class="row g-4">
+      <!-- Item Template -->
       <div class="col-md-6">
-        <div class="card p-4 shadow-sm rounded-4 bg-white">
-          <h5 class="mb-3 text-primary">Berita Terbaru</h5>
-          <ul class="mb-0">
-            <li><strong>12 Juni:</strong> DLH luncurkan program zona bebas sampah</li>
-            <li><strong>08 Juni:</strong> Penanaman 500 pohon</li>
-            <li><strong>05 Juni:</strong> Hari Lingkungan Hidup</li>
-          </ul>
+        <div class="p-4 rounded-4 shadow-sm h-100 border border-light-subtle bg-white hover-shadow transition">
+          <div class="d-flex align-items-start">
+            <i class="fas fa-user-cog fa-2x text-success me-3 mt-1"></i>
+            <div>
+              <h5 class="fw-bold">Sekretariat</h5>
+              <p class="text-muted mb-0">Mendukung operasional organisasi dengan menyediakan layanan administrasi, serta memfasilitasi komunikasi internal dan eksternal.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="p-4 rounded-4 shadow-sm h-100 border border-light-subtle bg-white hover-shadow transition">
+          <div class="d-flex align-items-start">
+            <i class="fas fa-seedling fa-2x text-success me-3 mt-1"></i>
+            <div>
+              <h5 class="fw-bold">Tata Lingkungan</h5>
+              <p class="text-muted mb-0">Bidang Tata Lingkungan mempunyai tugas pokok melaksanakan sebagian tugas Dinas di bidang Tata Lingkungan.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="p-4 rounded-4 shadow-sm h-100 border border-light-subtle bg-white hover-shadow transition">
+          <div class="d-flex align-items-start">
+            <i class="fas fa-recycle fa-2x text-success me-3 mt-1"></i>
+            <div>
+              <h5 class="fw-bold">Pengelolaan Sampah & Limbah B3</h5>
+              <p class="text-muted mb-0">Melaksanakan sebagian tugas dinas di bidang pengelolaan sampah dan limbah B3 secara berkelanjutan dan ramah lingkungan.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="p-4 rounded-4 shadow-sm h-100 border border-light-subtle bg-white hover-shadow transition">
+          <div class="d-flex align-items-start">
+            <i class="fas fa-exclamation-triangle fa-2x text-success me-3 mt-1"></i>
+            <div>
+              <h5 class="fw-bold">Pengendalian Pencemaran & Kerusakan LH</h5>
+              <p class="text-muted mb-0">Melaksanakan tugas pengendalian pencemaran dan kerusakan lingkungan hidup demi keberlangsungan ekosistem yang sehat.</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
+<style>
+  .hover-shadow {
+    transition: all 0.3s ease-in-out;
+  }
+
+  .hover-shadow:hover {
+    box-shadow: 0 0 15px rgba(0, 128, 0, 0.15);
+    transform: translateY(-3px);
+  }
+</style>
+
 <!-- Video Edukasi -->
-<!-- Video Edukasi -->
-<section id="edukasi" class="py-5" style="background-color: #e6f5ff;">
+<section id="edukasi" class="py-5" style="background: #ffffff;">
   <div class="container">
-    <h2 class="text-center fw-bold text-primary mb-5">🎥 Edukasi Dinas Lingkungan Hidup</h2>
+
+    <!-- Judul dan Deskripsi -->
+    <div class="mb-4">
+      <h2 class="fw-bold text-dark">Edukasi Dinas Lingkungan Hidup</h2>
+      <p class="text-muted" style="max-width: 600px;">
+        Kumpulan video edukatif seputar program, kegiatan, dan kampanye ramah lingkungan dari Dinas Lingkungan Hidup Kabupaten Subang. Mari tingkatkan kesadaran bersama untuk lingkungan yang lebih baik.
+      </p>
+    </div>
+
+    <!-- Video Grid -->
     <div class="row g-4">
       <div class="col-md-4">
         <iframe class="video-embed" src="https://www.youtube.com/embed/v-khsWM_5RQ" title="Sosialisasi Pengelolaan Sampah" allowfullscreen></iframe>
@@ -676,87 +959,76 @@
         <p class="mt-2 text-center fw-semibold">Kegiatan Lapangan DLH</p>
       </div>
     </div>
+
   </div>
 </section>
 
-<!-- Kontak -->
-<section id="kontak" class="py-5" style="background-color: #e6f5ff;">
+<!-- Optional: CSS untuk memperindah video -->
+<style>
+  .video-embed {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  }
+</style>
+
+
+<!-- Footer -->
+<footer class="text-dark mt-5 pt-5" style="background: #ffffff;">
   <div class="container">
-    <h2 class="text-center mb-5 fw-bold text-primary">📞 Kontak & Sosial Media</h2>
-    <div class="row text-center gy-4 justify-content-center">
+    <div class="row gy-5">
 
-      <!-- Instagram -->
-      <div class="col-md-3">
-        <div class="p-4 bg-white shadow-sm card-contact rounded-4">
-          <div class="icon-circle mx-auto" style="background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);">
-            <i class="fab fa-instagram text-white"></i>
-          </div>
-          <p class="fw-semibold mb-0 mt-2">@dlhsubang</p>
-        </div>
+      <!-- Alamat -->
+      <div class="col-md-6 col-lg-4">
+        <h6 class="fw-bold mb-3 border-bottom pb-2">📍 Alamat Kantor</h6>
+        <p class="small mb-2">
+          Jl. Sadang Tengah No.4-6, Sekeloa, Kec. Coblong, Kota Bandung<br>
+          Jawa Barat 40133, Indonesia
+        </p>
       </div>
 
-      <!-- Email -->
-      <div class="col-md-3">
-        <div class="p-4 bg-white shadow-sm card-contact rounded-4">
-          <div class="icon-circle mx-auto bg-primary text-white">
-            <i class="fas fa-envelope"></i>
-          </div>
-          <p class="fw-semibold mb-0 mt-2">info@dlh.go.id</p>
-        </div>
+      <!-- Laman -->
+      <div class="col-md-6 col-lg-4">
+        <h6 class="fw-bold mb-3 border-bottom pb-2">🔗 Tautan Terkait</h6>
+        <ul class="list-unstyled small">
+          <li><a href="#" class="text-decoration-none text-dark hover-text-success d-block mb-1">Visi & Misi</a></li>
+          <li><a href="#" class="text-decoration-none text-dark hover-text-success d-block mb-1">Tupoksi</a></li>
+          <li><a href="#" class="text-decoration-none text-dark hover-text-success d-block">Struktur Organisasi</a></li>
+        </ul>
       </div>
 
-      <!-- Telepon -->
-      <div class="col-md-3">
-        <div class="p-4 bg-white shadow-sm card-contact rounded-4">
-          <div class="icon-circle mx-auto bg-success text-white">
-            <i class="fas fa-phone-alt"></i>
-          </div>
-          <p class="fw-semibold mb-0 mt-2">+62 812 3456 7890</p>
-        </div>
-      </div>
-
-      <!-- Lokasi -->
-      <div class="col-md-3">
-        <div class="p-4 bg-white shadow-sm card-contact rounded-4">
-          <div class="icon-circle mx-auto bg-dark text-white">
-            <i class="fas fa-map-marker-alt"></i>
-          </div>
-          <p class="fw-semibold mb-0 mt-2">Subang, Jawa Barat</p>
-        </div>
+      <!-- Kontak -->
+      <div class="col-md-6 col-lg-4">
+        <h6 class="fw-bold mb-3 border-bottom pb-2">📞 Hubungi Kami</h6>
+        <ul class="list-unstyled small">
+          <li><i class="fas fa-phone-alt me-2 text-success"></i>0812-6382-3912</li>
+          <li><i class="fas fa-envelope me-2 text-success"></i>dlhbandung.com@gmail.com</li>
+          <li><i class="fab fa-facebook me-2 text-success"></i>DLH Tanjung Pinang</li>
+          <li><i class="fab fa-instagram me-2 text-success"></i>@dlh.tanjungpinang</li>
+          <li><i class="fab fa-tiktok me-2 text-success"></i>@dlh.tanjungpinang</li>
+        </ul>
       </div>
 
     </div>
+
+    <hr class="my-4" style="border-color: rgba(0, 0, 0, 0.1);">
+
+    <div class="text-center pb-3 small text-secondary">
+      © 2025 Dinas Lingkungan Hidup Persampahan. Seluruh hak cipta dilindungi.
+    </div>
   </div>
-</section>
+</footer>
 
-<!-- CSS Tambahan -->
 <style>
-.video-embed {
-  width: 100%;
-  height: 200px;
-  border-radius: 12px;
-  border: none;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
-.icon-circle {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  font-size: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+  .hover-text-success:hover {
+    color: #198754 !important;
+  }
 </style>
 
 
 
-
-<!-- Footer -->
-<footer>
-  <p>&copy; 2025 Dinas Lingkungan Hidup Persampahan. All rights reserved.</p>
-</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

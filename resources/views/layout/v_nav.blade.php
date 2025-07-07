@@ -1,72 +1,86 @@
-<ul id="accordionSidebar" class="navbar-nav sidebar shadow"
-    style="
-        backdrop-filter: blur(10px);
-        background: rgba(0, 34, 68, 0.75);
-        border-radius: 20px;
-        padding: 20px;
-        font-family: 'Poppins', sans-serif;
-        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-        border: 1px solid rgba(255, 255, 255, 0.18);
-    ">
+<ul class="navbar-nav sidebar sidebar-dark bg-gradient-primary accordion" id="accordionSidebar"
+    style="min-height: 100vh; font-family: 'Poppins', sans-serif; background: linear-gradient(180deg, #0a1d44 0%, #062144 100%);">
 
-    <!-- Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center mb-4" href="/home"
-        style="border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 1rem;">
-        <div class="sidebar-brand-icon rotate-n-15" style="font-size: 2rem; color: #ffc107;">
-            <i class="fas fa-recycle"></i>
+    <!-- Logo DLH -->
+    <div class="sidebar-brand d-flex align-items-center justify-content-center mt-4 mb-3">
+        <div class="sidebar-brand-icon">
+            <img src="{{ asset('assets/img/logo.jpg') }}" alt="Logo DLH" style="height: 60px; width: 60px; border-radius: 50%;">
         </div>
-        <div class="sidebar-brand-text mx-2 text-white fw-bold"
-            style="font-size: 1.3rem; letter-spacing: 1px;">Project2</div>
-    </a>
+    </div>
 
     <!-- Divider -->
-    <hr class="sidebar-divider" style="border-color: rgba(255,255,255,0.1);">
+    <hr class="sidebar-divider my-0" style="border-color: rgba(255,255,255,0.2);">
 
-    @php
-        $navItems = [
-            ['url' => '/home', 'icon' => 'tachometer-alt', 'label' => 'Dashboard'],
-            ['url' => '/pengaduan', 'icon' => 'chalkboard-teacher', 'label' => 'Pengaduan'],
-            ['url' => '/feedback', 'icon' => 'comments', 'label' => 'Feedback'],
-            ['url' => '/penugasan', 'icon' => 'clipboard-list', 'label' => 'Penugasan'],
-            ['url' => '/laporan', 'icon' => 'clipboard-check', 'label' => 'Bukti Tugas'],
-        ];
-    @endphp
+    <!-- Menu Utama -->
+    <li class="nav-item {{ Request::is('home') ? 'active' : '' }}">
+        <a class="nav-link" href="/home">
+            <i class="fas fa-home me-2"></i>
+            <span>Dashboard</span>
+        </a>
+    </li>
 
-    @foreach ($navItems as $item)
-        <li class="nav-item my-1">
-            <a href="{{ $item['url'] }}"
-                class="nav-link d-flex align-items-center px-3 py-2 {{ Request::is(ltrim($item['url'], '/').'*') ? 'active' : '' }}"
-                style="
-                    color: #ffffff;
-                    border-radius: 12px;
-                    font-weight: 500;
-                    transition: all 0.3s ease;
-                ">
-                <i class="fas fa-{{ $item['icon'] }} me-3" style="font-size: 1.2rem;"></i>
-                <span>{{ $item['label'] }}</span>
-            </a>
-        </li>
-    @endforeach
+    <li class="nav-item {{ Request::is('pengaduan*') ? 'active' : '' }}">
+        <a class="nav-link" href="/pengaduan">
+            <i class="fas fa-bullhorn me-2"></i>
+            <span>Pengaduan</span>
+        </a>
+    </li>
 
-    @auth
-        @if (auth()->user()->level == 1)
-            <li class="nav-item my-1">
-                <a href="{{ route('data.pj_petugas') }}" class="nav-link d-flex align-items-center px-3 py-2"
-                    style="color: #ffffff; font-weight: 500; border-radius: 12px; transition: all 0.3s ease;">
-                    <i class="fas fa-user-shield me-3" style="font-size: 1.2rem;"></i>
-                    <span>PJ & Petugas</span>
+    <li class="nav-item {{ Request::is('feedback*') ? 'active' : '' }}">
+        <a class="nav-link" href="/feedback">
+            <i class="fas fa-comment-dots me-2"></i>
+            <span>Feedback</span>
+        </a>
+    </li>
+
+    <li class="nav-item {{ Request::is('tim*') ? 'active' : '' }}">
+        <a class="nav-link" href="/tim">
+            <i class="fas fa-users me-2"></i>
+            <span>TIM</span>
+        </a>
+    </li>
+
+    <li class="nav-item {{ Request::is('penugasan*') ? 'active' : '' }}">
+        <a class="nav-link" href="/penugasan">
+            <i class="fas fa-tasks me-2"></i>
+            <span>Penugasan</span>
+        </a>
+    </li>
+
+    <li class="nav-item {{ Request::is('laporan*') ? 'active' : '' }}">
+        <a class="nav-link" href="/laporan">
+            <i class="fas fa-file-alt me-2"></i>
+            <span>Bukti Tugas</span>
+        </a>
+    </li>
+
+    <!-- Dropdown Data -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseData"
+            aria-expanded="true" aria-controls="collapseData">
+            <i class="fas fa-database me-2"></i>
+            <span>Data</span>
+        </a>
+        <div id="collapseData" class="collapse {{ Request::is('data/pj*') || Request::is('data/petugas*') ? 'show' : '' }}"
+            data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item {{ Request::is('data/pj*') ? 'active' : '' }}" href="{{ route('pj.index') }}">
+                    <i class="fas fa-user-tie me-2"></i> Data PJ
                 </a>
-            </li>
-        @endif
-    @endauth
+                <a class="collapse-item {{ Request::is('data/petugas*') ? 'active' : '' }}" href="{{ route('petugas.index') }}">
+                    <i class="fas fa-user-friends me-2"></i> Data Petugas
+                </a>
+            </div>
+        </div>
+    </li>
 
-    <hr class="sidebar-divider" style="border-color: rgba(255,255,255,0.1); margin-top: 1rem;">
+    <!-- Divider -->
+    <hr class="sidebar-divider my-2" style="border-color: rgba(255,255,255,0.2);">
 
     <!-- Logout -->
     <li class="nav-item">
-        <a href="#" onclick="logoutConfirm(event)" class="nav-link d-flex align-items-center px-3 py-2"
-            style="color: #ffffff; font-weight: 500; border-radius: 12px; transition: all 0.3s ease;">
-            <i class="fas fa-sign-out-alt me-3" style="font-size: 1.2rem;"></i>
+        <a class="nav-link" href="#" onclick="logoutConfirm(event)">
+            <i class="fas fa-sign-out-alt me-2"></i>
             <span>Logout</span>
         </a>
     </li>
@@ -75,30 +89,32 @@
     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
         @csrf
     </form>
-
-    <style>
-        .nav-link:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: #ffc107 !important;
-            transform: translateX(5px);
-        }
-        .nav-link.active {
-            background-color: rgba(255, 255, 255, 0.2);
-            color: #ffc107 !important;
-        }
-        .sidebar-brand-icon:hover {
-            transform: scale(1.2) rotate(10deg);
-            transition: 0.3s ease-in-out;
-            color: #ffdd57 !important;
-        }
-    </style>
-
-    <script>
-        function logoutConfirm(event) {
-            event.preventDefault();
-            if (confirm('Yakin mau logout?')) {
-                document.getElementById('logout-form').submit();
-            }
-        }
-    </script>
 </ul>
+
+<!-- Logout Script -->
+<script>
+    function logoutConfirm(event) {
+        event.preventDefault();
+        if (confirm('Yakin ingin logout?')) {
+            document.getElementById('logout-form').submit();
+        }
+    }
+</script>
+
+<!-- Tambahan Styling -->
+<style>
+    .nav-link:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: #00d4ff !important;
+        transform: translateX(5px);
+    }
+    .nav-link.active {
+        background-color: rgba(255, 255, 255, 0.15);
+        color: #00d4ff !important;
+        border-left: 4px solid #00d4ff;
+    }
+    .collapse-inner .collapse-item.active {
+        font-weight: bold;
+        color: #0a1d44 !important;
+    }
+</style>

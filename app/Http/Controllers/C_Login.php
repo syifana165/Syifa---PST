@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 
 class C_Login extends Controller
 {
-    // Tampilkan form login
+    // Tampilkan halaman login
     public function showLogin()
     {
         return view('v_login');
@@ -19,65 +19,66 @@ class C_Login extends Controller
     public function login(Request $request)
     {
         $credentials = $request->validate([
-            'email' => ['required', 'email'],
+            'username' => ['required', 'string'],
             'password' => ['required'],
         ]);
 
-        $user = M_User::where('email', $credentials['email'])->first();
+        // Cari user berdasarkan username
+        $user = M_User::where('username', $credentials['username'])->first();
 
-        if ($user && Hash::check($credentials['password'], $user->password)) {
-            Auth::login($user);
-            $request->session()->regenerate();
+        if ($user) {
+            // Cek jika password cocok (hash)
+            if (Hash::check($credentials['password'], $user->password)) {
+                // Jika perlu rehash (misalnya password lama)
+                if (Hash::needsRehash($user->password)) {
+                    $user->password = Hash::make($credentials['password']);
+                    $user->save();
+                }
 
-            // Redirect berdasarkan level user
-            if ($user->level == 1) {
-                return redirect()->route('pengaduan.index');  // Kepala Bidang
-            } elseif ($user->level == 2) {
-                return redirect()->route('pengaduan.index'); // Penanggung Jawab
-            } elseif ($user->level == 3) {
-                return redirect()->route('petugaslapangan.index'); // Petugas Lapangan
-            } else {
-                Auth::logout();
-                return back()->withErrors([
-                    'email' => 'Level user tidak dikenali.',
-                ]);
+                Auth::login($user);
+                $request->session()->regenerate();
+                return $this->redirectByRole($user);
+            }
+
+            // Cek jika password masih plaintext (tidak direkomendasikan)
+            if ($user->password === $credentials['password']) {
+                $user->password = Hash::make($credentials['password']);
+                $user->save();
+
+                Auth::login($user);
+                $request->session()->regenerate();
+                return $this->redirectByRole($user);
             }
         }
 
+        // Jika gagal login
         return back()->withErrors([
-            'email' => 'Email atau password salah.',
+            'username' => 'Username atau password salah.',
         ]);
     }
 
-    // Tampilkan form register
-    public function showRegister()
+    // Redirect berdasarkan role
+    private function redirectByRole($user)
     {
-        return view('v_register');
+        $role = trim(strtolower($user->role));
+
+        switch ($role) {
+            case 'kepala bidang':
+            case 'pj':
+                return redirect()->route('pengaduan.index');
+
+            case 'petugas':
+                return redirect()->route('petugaslapangan.index');
+
+            default:
+                Auth::logout();
+                return back()->withErrors([
+                    'username' => 'Role user tidak dikenali.',
+                ]);
+        }
     }
 
-    // Proses register
-    public function register(Request $request)
-    {
-        // Validasi input register
-        $request->validate([
-            'nama' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'unique:tb_user,email'],
-            'password' => ['required', 'min:6', 'confirmed'],
-        ]);
-
-        // Simpan user baru dengan default role (misal mahasiswa)
-        M_User::create([
-            'nama' => $request->nama,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'level' => $request->level, 
-        ]);
-
-        // Redirect ke login dengan pesan sukses
-        return redirect()->route('login')->with('success', 'Akun berhasil dibuat. Silakan login.');
-    }
-
-    // Proses logout
+    // Logout
     public function logout(Request $request)
     {
         Auth::logout();

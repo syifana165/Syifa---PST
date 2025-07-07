@@ -15,4 +15,5 @@ class C_Halaman extends Controller
 
         return view('v_halaman', compact('pengaduanTerbaru'));
     }
+    
 }
