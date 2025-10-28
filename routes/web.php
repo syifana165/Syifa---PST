@@ -66,7 +66,6 @@ Route::post('/login', [C_Login::class, 'login'])->name('login.post');
 
 
 
-
 Route::get('/dokumen', [C_Dokumen::class, 'index'])->name('dokumen.index');
 Route::get('/dokumen/tambah', [C_Dokumen::class, 'create'])->name('dokumen.tambah');
 Route::post('/dokumen/simpan', [C_Dokumen::class, 'store'])->name('dokumen.store');

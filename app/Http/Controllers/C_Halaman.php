@@ -16,7 +16,7 @@ class C_Halaman extends Controller
         // Ambil artikel
         if (class_exists(\App\Models\M_Artikel::class)) {
             try {
-                $artikel = \App\Models\M_Artikel::orderBy('created_at', 'desc')->take(6)->get();
+                $artikel = \App\Models\M_Artikel::orderBy('tanggal_upload', 'desc')->take(6)->get();
             } catch (\Throwable $e) {
                 $artikel = collect();
             }

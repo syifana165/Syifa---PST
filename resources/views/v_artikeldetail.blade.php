@@ -52,14 +52,22 @@
           </p>
 
           <!-- Gambar Artikel -->
-          @if($artikel->gambar)
-          <div class="text-center mb-4">
-            <img src="{{ asset('uploads/artikel/' . $artikel->gambar) }}" 
-                 class="img-fluid rounded" 
-                 alt="{{ $artikel->judul }}" 
-                 style="max-height: 450px; object-fit: cover;">
-          </div>
+          @if($artikel->gambar && Storage::disk('public')->exists($artikel->gambar))
+            <div class="text-center mb-4">
+              <img src="{{ asset('storage/' . $artikel->gambar) }}" 
+                  class="img-fluid rounded" 
+                  alt="{{ $artikel->judul }}" 
+                  style="max-height: 450px; object-fit: cover;">
+            </div>
+          @else
+            <div class="text-center mb-4">
+              <img src="{{ asset('images/no-image.png') }}" 
+                  class="img-fluid rounded" 
+                  alt="Tidak ada gambar" 
+                  style="max-height: 450px; object-fit: cover;">
+            </div>
           @endif
+
 
           <!-- Isi Artikel -->
           <div class="artikel-isi" style="font-size: 1rem; color: #333; line-height: 1.7; text-align: justify;">

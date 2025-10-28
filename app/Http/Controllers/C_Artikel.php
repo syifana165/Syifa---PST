@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use App\Models\M_Artikel;
+use Illuminate\Support\Facades\Storage;
 
 class C_Artikel extends Controller
 {
@@ -13,6 +15,7 @@ class C_Artikel extends Controller
         return view('v_artikel', compact('artikel'));
     }
 
+    // Detail artikel
     public function show($id)
     {
         $artikel = M_Artikel::findOrFail($id);
@@ -24,7 +27,7 @@ class C_Artikel extends Controller
     {
         return view('v_artikeltambah');
     }
- 
+
     // Proses simpan artikel baru
     public function store(Request $request)
     {
@@ -36,14 +39,15 @@ class C_Artikel extends Controller
 
         $gambarName = null;
         if ($request->hasFile('gambar')) {
-            $gambarName = time() . '.' . $request->gambar->extension();
-            $request->gambar->move(public_path('uploads/artikel'), $gambarName);
+            // Simpan di storage/app/public/artikel
+            $gambarName = $request->file('gambar')->store('artikel', 'public');
         }
 
         M_Artikel::create([
             'judul' => $request->judul,
             'gambar' => $gambarName,
             'isi' => $request->isi,
+            'tanggal_upload' => now(),
         ]);
 
         return redirect()->route('artikel.index')->with('success', 'Artikel berhasil ditambahkan!');
@@ -68,18 +72,20 @@ class C_Artikel extends Controller
         ]);
 
         $gambarName = $artikel->gambar;
+
         if ($request->hasFile('gambar')) {
-            if ($gambarName && file_exists(public_path('uploads/artikel/' . $gambarName))) {
-                unlink(public_path('uploads/artikel/' . $gambarName));
+            // Hapus file lama jika ada
+            if ($gambarName && Storage::disk('public')->exists($gambarName)) {
+                Storage::disk('public')->delete($gambarName);
             }
-            $gambarName = time() . '.' . $request->gambar->extension();
-            $request->gambar->move(public_path('uploads/artikel'), $gambarName);
+            // Simpan file baru
+            $gambarName = $request->file('gambar')->store('artikel', 'public');
         }
 
         $artikel->update([
             'judul' => $request->judul,
-            'gambar' => $gambarName,
             'isi' => $request->isi,
+            'gambar' => $gambarName,
         ]);
 
         return redirect()->route('artikel.index')->with('success', 'Artikel berhasil diperbarui!');
@@ -89,9 +95,12 @@ class C_Artikel extends Controller
     public function destroy($id)
     {
         $artikel = M_Artikel::findOrFail($id);
-        if ($artikel->gambar && file_exists(public_path('uploads/artikel/' . $artikel->gambar))) {
-            unlink(public_path('uploads/artikel/' . $artikel->gambar));
+
+        // Hapus file gambar jika ada
+        if ($artikel->gambar && Storage::disk('public')->exists($artikel->gambar)) {
+            Storage::disk('public')->delete($artikel->gambar);
         }
+
         $artikel->delete();
 
         return redirect()->route('artikel.index')->with('success', 'Artikel berhasil dihapus!');

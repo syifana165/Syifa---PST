@@ -321,8 +321,6 @@
 </section>
 
 
-
-
   <!-- ========================== BERITA / ARTIKEL ========================== -->
 <section id="berita" class="section py-5" style="background: #f9f9ff;">
   <div class="container" data-aos="fade-up">
@@ -332,34 +330,40 @@
 
     <div class="row g-4 justify-content-center">
       @forelse($artikel as $a)
-      <div class="col-md-4">
-        <div class="card dokumen-card shadow-sm border-0 h-100">
-          @if($a->gambar)
-          <img src="{{ asset('uploads/artikel/' . $a->gambar) }}" 
-               class="card-img-top" 
-               alt="{{ $a->judul }}" 
-               style="height:200px; object-fit:cover;">
-          @endif
-          <div class="card-body">
-            <h5 class="card-title">{{ $a->judul }}</h5>
-            <p class="card-text text-muted">{{ Str::limit(strip_tags($a->isi), 100) }}</p>
-          </div>
-          <div class="card-footer bg-transparent border-0">
-            <a href="{{ route('artikel.show', $a->id) }}" class="btn btn-sm btn-gradient">
-              <i class="bi bi-eye"></i> Baca Selengkapnya
-            </a>
+        <div class="col-md-4">
+          <div class="card dokumen-card shadow-sm border-0 h-100">
+            @if($a->gambar && Storage::disk('public')->exists($a->gambar))
+              <img src="{{ asset('storage/' . $a->gambar) }}"
+                   alt="{{ $a->judul }}"
+                   class="card-img-top"
+                   style="height:200px; object-fit:cover;">
+            @else
+              <img src="{{ asset('images/no-image.png') }}"
+                   alt="Tidak ada gambar"
+                   class="card-img-top"
+                   style="height:200px; object-fit:cover;">
+            @endif
+
+            <div class="card-body">
+              <h5 class="card-title">{{ $a->judul }}</h5>
+              <p class="card-text text-muted">{{ Str::limit(strip_tags($a->isi), 100) }}</p>
+            </div>
+
+            <div class="card-footer bg-transparent border-0">
+              <a href="{{ route('artikel.show', $a->id) }}" class="btn btn-sm btn-gradient">
+                <i class="bi bi-eye"></i> Baca Selengkapnya
+              </a>
+            </div>
           </div>
         </div>
-      </div>
       @empty
-      <div class="col-12 text-center">
-        <p class="text-muted fst-italic">Belum ada artikel yang tersedia.</p>
-      </div>
+        <div class="col-12 text-center">
+          <p class="text-muted fst-italic">Belum ada artikel yang tersedia.</p>
+        </div>
       @endforelse
     </div>
   </div>
 
-  <!-- Style khusus artikel -->
   <style>
     .btn-gradient {
         background: linear-gradient(135deg, #8b5cf6, #6d28d9);
@@ -380,6 +384,7 @@
     }
   </style>
 </section>
+
 
 <!-- Kontak Section -->
 <section id="kontak" class="kontak section py-5" style="background: #f8f9fa;">

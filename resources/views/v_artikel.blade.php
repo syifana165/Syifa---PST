@@ -118,9 +118,12 @@ h2 {
         @foreach ($artikel as $item)
         <div class="col-md-4 mb-4">
             <div class="card">
-                @if ($item->gambar)
-                    <img src="{{ asset('uploads/artikel/' . $item->gambar) }}" class="card-img-top" style="height:200px; object-fit:cover;">
-                @endif
+            @if ($item->gambar)
+                <img src="{{ asset('storage/' . $item->gambar) }}" 
+                    alt="{{ $item->judul }}" 
+                    class="card-img-top" 
+                    style="height:200px; object-fit:cover;">
+            @endif
                 <div class="card-body text-center">
                     <h5 class="card-title">{{ $item->judul }}</h5>
                     <p class="card-text text-muted">{{ Str::limit(strip_tags($item->isi), 100) }}</p>
