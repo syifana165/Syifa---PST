@@ -1,19 +1,48 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\M_LaporanP;
-use App\Models\M_Pengaduan; // <- tambahkan ini
+use Illuminate\Support\Collection;
 
 class C_Halaman extends Controller
 {
     public function index()
     {
-        $laporan = M_LaporanP::orderBy('tanggal', 'desc')->get();
+        $artikel = collect();
+        $dokumen = collect();
+        $profilperusahaan = collect();
 
-        $pengaduanTerbaru = M_Pengaduan::orderBy('Nama', 'desc')->take(5)->get();
+        // Ambil artikel
+        if (class_exists(\App\Models\M_Artikel::class)) {
+            try {
+                $artikel = \App\Models\M_Artikel::orderBy('created_at', 'desc')->take(6)->get();
+            } catch (\Throwable $e) {
+                $artikel = collect();
+            }
+        }
 
-        return view('v_halaman', compact('pengaduanTerbaru'));
+        // Ambil dokumen
+        if (class_exists(\App\Models\M_Dokumen::class)) {
+            try {
+                $dokumen = \App\Models\M_Dokumen::all();
+            } catch (\Throwable $e) {
+                $dokumen = collect();
+            }
+        }
+
+        // Ambil profil perusahaan
+        if (class_exists(\App\Models\M_ProfilPerusahaan::class)) {
+            try {
+                $profilperusahaan = \App\Models\M_ProfilPerusahaan::orderBy('tipe')->get();
+            } catch (\Throwable $e) {
+                $profilperusahaan = collect();
+            }
+        }
+
+        // Buat variabel $profil yang dipakai di view
+        $profil = $profilperusahaan;
+
+        return view('v_halaman', compact('artikel', 'dokumen', 'profil'));
     }
-    
 }

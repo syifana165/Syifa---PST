@@ -1,35 +1,43 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Models\M_User;
 
-class RegisterController extends Controller
+class C_Register extends Controller
 {
     public function show()
     {
-        return view('auth.register');
+        return view('v_register');
     }
 
     public function register(Request $request)
     {
         $request->validate([
             'nama' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
+            'email' => 'required|email|unique:tb_user,email',
             'password' => 'required|confirmed|min:6',
-            'level' => 'required|in:1,2,3',
+        ], [
+            'nama.required' => 'Nama wajib diisi.',
+            'email.required' => 'Email wajib diisi.',
+            'email.unique' => 'Email sudah digunakan.',
+            'password.required' => 'Password wajib diisi.',
+            'password.confirmed' => 'Konfirmasi password tidak cocok.',
         ]);
 
-        User::create([
-            'name' => $request->nama,
+        $username = strtolower(str_replace(' ', '', explode(' ', $request->nama)[0])) . rand(100, 999);
+
+        M_User::create([
+            'nama' => $request->nama,
             'email' => $request->email,
+            'username' => $username,
             'password' => Hash::make($request->password),
-            'level' => $request->level,
+            'role' => 'peserta',
+            'foto' => null,
         ]);
 
-        return redirect()->route('login')->with('success', 'Registrasi berhasil! Silakan login.');
+        return redirect()->route('login')->with('success', 'Registrasi berhasil! Silakan login menggunakan email Anda.');
     }
 }

@@ -9,15 +9,12 @@ class C_Home extends Controller
 {
     public function index()
     {
-        $data = [
-            'totalPengaduan' => DB::table('tb_pengaduan')->count(),
-            'totalFeedback' => DB::table('tb_feedback')->count(),
-            'totalPJ' => DB::table('tb_pj')->count(),
-            'totalPetugas' => DB::table('tb_petugas')->count(),
-            'totalPenugasan' => DB::table('tb_penugasan')->count(),
-            'totalLaporan' => DB::table('tb_laporanpetugas')->count(),
-        ];
+        // Ambil data artikel, dokumen, dan profil perusahaan
+        $artikel = DB::table('tb_artikel')->orderBy('id', 'desc')->get();
+        $dokumen = DB::table('tb_dokumen')->get();
+        $profil  = DB::table('tb_profil_perusahaan')->get(); // <--- tambahkan ini
 
-        return view('v_home', $data);
+        // Kirim data ke view
+        return view('v_halaman', compact('artikel', 'dokumen', 'profil'));
     }
 }

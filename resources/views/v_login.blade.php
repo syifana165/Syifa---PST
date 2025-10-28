@@ -1,136 +1,184 @@
 <!doctype html>
-<html lang="id">
+<html lang="id" data-theme="light">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Login</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-  <style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+    html[data-theme='light'] {
+        /* Ganti background ke putih keunguan lembut */
+        --bg-gradient: linear-gradient(135deg, #ffffff 0%, #f5ebff 40%, #f1e6ff 100%);
+        --card-bg: rgba(255, 255, 255, 0.95);
+        --text-color: #2c245c;
+        --btn-gradient: linear-gradient(90deg, #8e44ad, #6c5ce7);
+        --btn-hover-gradient: linear-gradient(90deg, #7d3c98, #5a4ae3);
+        --input-focus: #8e44ad;
+    }
+
+    html[data-theme='dark'] {
+        --bg-gradient: linear-gradient(135deg, #3a275a 0%, #5b3f7e 100%);
+        --card-bg: rgba(25, 25, 35, 0.9);
+        --text-color: #f5f5f5;
+        --btn-gradient: linear-gradient(90deg, #a56ef5, #7a5df0);
+        --btn-hover-gradient: linear-gradient(90deg, #9050e3, #674fe0);
+        --input-focus: #a56ef5;
+    }
+
     body, html {
-      height: 100%;
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
+        height: 100%;
+        margin: 0;
+        font-family: 'Poppins', sans-serif;
+        background: var(--bg-gradient);
+        color: var(--text-color);
+        transition: all 0.4s ease;
     }
 
     .login-section {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100%;
-      background-color: #0B2447;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        padding: 2rem;
     }
 
     .login-card {
-      background: rgba(255, 255, 255, 0.97);
-      padding: 2rem 2.5rem;
-      border-radius: 1rem;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-      width: 100%;
-      max-width: 400px;
+        background: var(--card-bg);
+        padding: 2.5rem;
+        border-radius: 1.2rem;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+        width: 100%;
+        max-width: 400px;
+        backdrop-filter: blur(10px);
+        transition: 0.4s;
     }
 
-    .login-card .form-control {
-      border-radius: 0.6rem;
-      transition: 0.3s;
+    .login-card:hover {
+        transform: translateY(-5px);
     }
 
-    .login-card .form-control:focus {
-      box-shadow: 0 0 0 0.2rem rgba(11, 36, 71, 0.3);
+    .btn-primary {
+        background: var(--btn-gradient);
+        border: none;
+        border-radius: 0.6rem;
+        transition: 0.4s;
+        color: white;
+        font-weight: 500;
     }
 
-    .login-card .btn-primary {
-      background: #0B2447;
-      border: none;
-      border-radius: 0.6rem;
+    .btn-primary:hover {
+        background: var(--btn-hover-gradient);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(140, 82, 255, 0.4);
     }
 
-    .login-card .btn-primary:hover {
-      background: #031634;
+    .login-title {
+        font-weight: 700;
+        background: linear-gradient(90deg, #8e44ad, #6c5ce7);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 1.2rem;
     }
 
-    .left-side {
-      background-color: #19376D;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 2rem;
-      text-align: center;
+    .form-control:focus {
+        border-color: var(--input-focus);
+        box-shadow: 0 0 0 0.2rem rgba(142, 68, 173, 0.25);
     }
 
-    .left-side img {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin-bottom: 20px;
+    .input-group-text {
+        background: transparent;
+        border-right: none;
+        color: var(--input-focus);
     }
 
-    .left-side h1 {
-      font-weight: bold;
+    .form-control {
+        border-left: none;
     }
 
-    .left-side p {
-      opacity: 0.9;
+    .text-muted a {
+        color: #8e44ad;
+        font-weight: 500;
+        text-decoration: none;
     }
 
-    @media (max-width: 768px) {
-      .left-side {
-        display: none;
-      }
+    .text-muted a:hover {
+        text-decoration: underline;
     }
-  </style>
+</style>
+
 </head>
+
 <body>
-  <div class="container-fluid h-100">
-    <div class="row h-100">
-      <!-- Kiri: Branding -->
-      <div class="col-md-6 left-side">
-        <img src="{{ asset('assets/img/logo.jpg') }}" alt="Logo DLH">
-        <h1>Selamat Datang</h1>
-        <p>Dinas Lingkungan Hidup Kabupaten Subang</p>
-      </div>
+    <div class="container login-section">
+        <div class="login-card text-center">
+            <!-- Judul login dengan ikon -->
+            <h4 class="mb-4 login-title">
+                <i class="fa-solid fa-right-to-bracket" style="color: #8e44ad; margin-right: 8px;"></i>
+                Login
+            </h4>
 
-      <!-- Kanan: Login -->
-      <div class="col-md-6 login-section">
-        <div class="login-card">
-          <h4 class="text-center mb-4"><i class="fas fa-sign-in-alt me-2"></i>Login</h4>
 
-          @if(session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-          @endif
+            @if(session('success'))
+                <div class="alert alert-success">{{ session('success') }}</div>
+            @endif
 
-          @if($errors->any())
-            <div class="alert alert-danger">{{ $errors->first() }}</div>
-          @endif
+            @if($errors->any())
+                <div class="alert alert-danger">{{ $errors->first() }}</div>
+            @endif
 
-          <form method="POST" action="{{ route('login') }}">
-            @csrf
-            <div class="form-group mb-3">
-              <label for="username">Username</label>
-              <div class="input-group">
-                <span class="input-group-text"><i class="fas fa-user"></i></span>
-                <input type="text" name="username" class="form-control" id="username" required>
-              </div>
-              @error('username') <small class="text-danger">{{ $message }}</small> @enderror
-            </div>
+            <form method="POST" action="{{ route('login.post') }}">
+                @csrf
 
-            <div class="form-group mb-3">
-              <label for="password">Password</label>
-              <div class="input-group">
-                <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                <input type="password" name="password" class="form-control" id="password" required>
-              </div>
-              @error('password') <small class="text-danger">{{ $message }}</small> @enderror
-            </div>
+                <div class="mb-3 text-start">
+                    <label for="email" class="form-label fw-semibold">Email</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                        <input type="email" name="email" class="form-control" id="email" value="{{ old('email') }}" required>
+                    </div>
+                    @error('email') <small class="text-danger">{{ $message }}</small> @enderror
+                </div>
 
-            <button type="submit" class="btn btn-primary w-100 mt-3">Login</button>
-          </form>
+                <div class="mb-3 text-start">
+                    <label for="password" class="form-label fw-semibold">Password</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                        <input type="password" name="password" class="form-control" id="password" required>
+                    </div>
+                    @error('password') <small class="text-danger">{{ $message }}</small> @enderror
+                </div>
+
+                <div class="mb-3">
+                    <div class="g-recaptcha d-flex justify-content-center" data-sitekey="{{ env('RECAPTCHA_SITE_KEY') }}"></div>
+                    @if ($errors->has('g-recaptcha-response') || $errors->has('captcha'))
+                        <small class="text-danger">
+                            {{ $errors->first('g-recaptcha-response') ?? $errors->first('captcha') }}
+                        </small>
+                    @endif
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 mt-2" id="loginBtn">Masuk</button>
+
+                <div class="text-center mt-3">
+    <small><a href="{{ route('password.request') }}">Lupa Password?</a></small>
+</div>
+
+
+                <div class="text-center mt-3">
+                    <small>Belum punya akun? <a href="{{ route('register') }}">Daftar</a></small>
+                </div>
+            </form>
         </div>
-      </div>
     </div>
-  </div>
+
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script>
+        // Optional: Tambah efek loading
+        document.querySelector("form").addEventListener("submit", function() {
+            const btn = document.getElementById("loginBtn");
+            btn.disabled = true;
+            btn.innerHTML = "Memproses...";
+        });
+    </script>
 </body>
 </html>

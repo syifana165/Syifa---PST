@@ -1,108 +1,153 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Register</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
-  <style>
-    body {
-      background: linear-gradient(to right, #43cea2, #185a9d);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .register-card {
-      padding: 2rem;
-      border-radius: 1rem;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-      background-color: #fff;
-      width: 100%;
-      max-width: 400px;
-    }
-    .register-card .form-control {
-      border-radius: 0.5rem;
-    }
-    .register-card .btn-success {
-      border-radius: 0.5rem;
-      background-color: #28a745;
-      border: none;
-    }
-    .register-card .btn-success:hover {
-      background-color: #218838;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Akun</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        html[data-theme='light'] {
+            --bg-gradient: linear-gradient(135deg, #f8f3fc 0%, #f0e6fa 40%, #eae2ff 100%);
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --text-color: #2c245c;
+            --btn-gradient: linear-gradient(90deg, #8e44ad, #6c5ce7);
+            --btn-hover-gradient: linear-gradient(90deg, #7d3c98, #5a4ae3);
+            --input-focus: #8e44ad;
+        }
+
+        html[data-theme='dark'] {
+            --bg-gradient: linear-gradient(135deg, #3a275a 0%, #5b3f7e 100%);
+            --card-bg: rgba(25, 25, 35, 0.9);
+            --text-color: #f5f5f5;
+            --btn-gradient: linear-gradient(90deg, #a56ef5, #7a5df0);
+            --btn-hover-gradient: linear-gradient(90deg, #9050e3, #674fe0);
+            --input-focus: #a56ef5;
+        }
+
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-color);
+            transition: all 0.4s ease;
+        }
+
+        .login-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            padding: 2rem;
+        }
+
+        .login-card {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 1.2rem;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+            width: 100%;
+            max-width: 400px;
+            backdrop-filter: blur(10px);
+            transition: 0.4s;
+        }
+
+        .login-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .btn-primary {
+            background: var(--btn-gradient);
+            border: none;
+            border-radius: 0.6rem;
+            transition: 0.4s;
+            color: white;
+            font-weight: 500;
+        }
+
+        .btn-primary:hover {
+            background: var(--btn-hover-gradient);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(140, 82, 255, 0.4);
+        }
+
+        .login-title {
+            font-weight: 700;
+            background: linear-gradient(90deg, #8e44ad, #6c5ce7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.2rem;
+        }
+
+        .form-control:focus {
+            border-color: var(--input-focus);
+            box-shadow: 0 0 0 0.2rem rgba(142, 68, 173, 0.25);
+        }
+
+        .input-group-text {
+            background: transparent;
+            border-right: none;
+            color: var(--input-focus);
+        }
+
+        .form-control {
+            border-left: none;
+        }
+
+        .text-muted a {
+            color: #8e44ad;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .text-muted a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-  <div class="register-card">
-    <h4 class="text-center mb-4"><i class="fas fa-user-plus mr-2"></i>Register</h4>
+    <div class="container login-section">
+        <div class="login-card text-center">
+            <h4 class="login-title"><i class="bi bi-person-fill-add"></i> Daftar Akun</h4>
 
-    @if(session('success'))
-      <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
+            @if(session('success'))
+                <div class="alert alert-success">{{ session('success') }}</div>
+            @endif
 
-    <form method="POST" action="{{ route('register') }}">
-      @csrf
+            @if($errors->any())
+                <div class="alert alert-danger">{{ $errors->first() }}</div>
+            @endif
 
-      <div class="form-group">
-        <label for="nama">Nama</label>
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <div class="input-group-text"><i class="fas fa-user"></i></div>
-          </div>
-          <input type="text" name="nama" id="nama" class="form-control @error('nama') is-invalid @enderror" value="{{ old('nama') }}" required />
+            <form method="POST" action="{{ route('register.post') }}">
+                @csrf
+                <div class="input-group mb-3">
+                    <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+                    <input type="text" name="nama" class="form-control" placeholder="Nama Lengkap" required value="{{ old('nama') }}">
+                </div>
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
+                    <input type="email" name="email" class="form-control" placeholder="Email" required value="{{ old('email') }}">
+                </div>
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                    <input type="password" name="password" class="form-control" placeholder="Password" required>
+                </div>
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                    <input type="password" name="password_confirmation" class="form-control" placeholder="Konfirmasi Password" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 mt-2">Daftar</button>
+
+                <div class="text-center mt-4">
+                    <p class="text-muted">Sudah punya akun? <a href="{{ route('login') }}">Login</a></p>
+                </div>
+            </form>
         </div>
-        @error('nama') <small class="text-danger">{{ $message }}</small> @enderror
-      </div>
-
-      <div class="form-group">
-        <label for="email">Email</label>
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <div class="input-group-text"><i class="fas fa-envelope"></i></div>
-          </div>
-          <input type="email" name="email" id="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" required />
-        </div>
-        @error('email') <small class="text-danger">{{ $message }}</small> @enderror
-      </div>
-
-      <div class="form-group">
-        <label for="password">Password</label>
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <div class="input-group-text"><i class="fas fa-lock"></i></div>
-          </div>
-          <input type="password" name="password" id="password" class="form-control @error('password') is-invalid @enderror" required />
-        </div>
-        @error('password') <small class="text-danger">{{ $message }}</small> @enderror
-      </div>
-
-      <div class="form-group">
-        <label for="password_confirmation">Konfirmasi Password</label>
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <div class="input-group-text"><i class="fas fa-lock"></i></div>
-          </div>
-          <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" required />
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="level">Level</label>
-        <select name="level" id="level" class="form-control @error('level') is-invalid @enderror" required>
-          <option value="">-- Pilih Level --</option>
-          <option value="1" {{ old('level') == '1' ? 'selected' : '' }}>Kepala Bidang</option>
-          <option value="2" {{ old('level') == '2' ? 'selected' : '' }}>Penanggung Jawab</option>
-          <option value="3" {{ old('level') == '3' ? 'selected' : '' }}>Petugas</option>
-        </select>
-        @error('level') <small class="text-danger">{{ $message }}</small> @enderror
-      </div>
-
-      <button type="submit" class="btn btn-success btn-block mt-3">Daftar</button>
-      <p class="mt-3 text-center">Sudah punya akun? <a href="{{ route('login') }}">Login</a></p>
-    </form>
-  </div>
+    </div>
 </body>
 </html>

@@ -1,22 +1,22 @@
 <?php
+
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
 class M_User extends Authenticatable
 {
-    use HasFactory, Notifiable;
-
     protected $table = 'tb_user';
+    protected $primaryKey = 'id';
+    public $timestamps = true;
 
     protected $fillable = [
         'nama',
         'email',
-        'password',
-        'role', 
         'username',
+        'password',
+        'role',
+        'foto'
     ];
 
     protected $hidden = [
